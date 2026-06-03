@@ -21,6 +21,8 @@ env/
 .env
 kaggle.json
 
+.worktrees
+.worktrees/
 data/
 models/
 outputs/
