@@ -1,5 +1,9 @@
 # Notebook-First Run Tracker Design
 
+Status: historical design note. The final competition archive is documented in
+`docs/14_eos9_final_results.md`; notebook 14 superseded the notebook 13 active
+lane described below.
+
 ## 1. Purpose
 
 Build a reusable research workflow for this BirdCLEF+ 2026 repository while
@@ -24,7 +28,7 @@ In scope:
 - Add Kaggle CLI metadata templates for pushed notebooks.
 - Add thin local helpers for metadata validation, kernel push, and run record
   updates.
-- Seed the tracker with known protected submissions and current champion
+- Seed the tracker with known protected submissions and champion
   results.
 - Link tracker records from the main documentation.
 - Keep active score work focused on one notebook lane at a time.
@@ -179,11 +183,10 @@ Recommended order:
 5. Avoid tiny calibration tuning unless diagnostics show a specific question it
    answers.
 
-Notebook `13` is the right active lane because it reuses the current 0.893
-soundscape-calibrated champion path while testing a controlled temporal
-residual model. If it fails, the project should treat that as evidence to move
-toward model diversity, final submission safety, or external high-scoring
-ideas, not more scalar calibration tuning.
+Notebook `13` was the active lane at the time because it reused the 0.893
+soundscape-calibrated path while testing a controlled temporal residual model.
+It later reached 0.898 public score before notebook 14 became the final
+champion.
 
 ## 7. Reproducibility Roadmap
 
@@ -197,8 +200,11 @@ Recommended order:
    - ONNX SED public score 0.822.
    - ONNX Perch + SED exact blend public score 0.890.
    - ONNX Perch + SED proxy6 public score 0.892.
-   - ONNX Perch + SED soundscape-calibrated champion public score 0.893.
-3. Add Kaggle metadata for active notebook `13`.
+   - ONNX Perch + SED soundscape-calibrated public score 0.893.
+   - ONNX Perch + SED temporal residual public score 0.898.
+   - EoS.9 final public/private score 0.950/0.941.
+3. Add Kaggle metadata for active notebook `13`, then notebook `14` after it is
+   promoted.
 4. Add metadata for protected notebooks only when they need to be pushed or
    reproduced.
 5. Add thin validation, push, and record helpers.

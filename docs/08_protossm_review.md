@@ -81,11 +81,10 @@ controlled experiment at a time:
 ## 7. Recommendation
 
 Do **not** continue improving the TensorFlow Perch submission path. Keep Perch
-v2 version 14 as the protected champion, keep EfficientNet-B0 version 9 as the
+v2 version 14 as a protected baseline, keep EfficientNet-B0 version 9 as the
 protected fallback, and move new work toward ONNX-based inference:
 
 1. Distilled SED ONNX baseline.
 2. ONNX Perch speed test.
 3. ONNX Perch + SED blend.
 4. Project-owned sequence model only if the simpler ONNX paths succeed.
-

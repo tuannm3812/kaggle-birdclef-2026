@@ -6,6 +6,10 @@
 `10_onnx_perch_sed_soundscape_calibrated.ipynb` explains the move from
 **0.892** to **0.893**.
 
+This diagnostic is historical. The soundscape-calibrated blend was later
+superseded by the temporal residual blend at **0.898** public score and by the
+final EoS.9 notebook at **0.950 public / 0.941 private**.
+
 | Metric | Value |
 |---|---:|
 | Submission columns | **234** |
@@ -83,18 +87,15 @@ All six proxy classes kept the default proxy weight of **0.05**.
 This suggests proxy mapping helped as a fixed small signal, but the labeled
 soundscape calibration did not find a better proxy weight from the current grid.
 
-## 5. Recommendation
+## 5. Archive Recommendation
 
-The next low-risk variant should be **support-thresholded calibration**:
+The support-thresholded calibration idea was tested after this diagnostic and
+did not improve the score. Keep the result as evidence that hard support/AP
+thresholds were not a better next step.
 
-1. Keep the **0.893** notebook protected.
+1. Keep the **0.893** notebook protected as a project-owned baseline.
 2. Keep proxy handling unchanged.
-3. Apply learned per-class weights only when a class has at least **10**
-   labeled soundscape positives.
-4. Optionally require an AP gain threshold such as **0.01** before changing a
-   default weight.
-5. Leave low-support classes at the default blend weight to reduce overfit.
-
-This is safer than a full sequence model and directly follows what the
-calibration diagnostics show.
-
+3. Preserve `archive/11_onnx_perch_sed_calibrated_min10_ap001.ipynb` as the
+   negative thresholding result.
+4. Use this file to understand why soundscape calibration helped before moving
+   to larger ensemble routes.

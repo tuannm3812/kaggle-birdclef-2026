@@ -16,6 +16,7 @@ Key repository facts:
 | Deduplicated labeled soundscape windows | **739** |
 | Current EfficientNet-B0 public score | **0.646** |
 | Current Perch v2 public score | **0.770** |
+| Final EoS.9 public/private score | **0.950 / 0.941** |
 
 ## 2. What The Notebooks Need To Answer
 
@@ -42,10 +43,16 @@ The competition reduces to five practical questions:
 |---|---|---|
 | Explore the dataset | `01_eda.ipynb` | Audit labels, soundscape annotations, metadata shift, and acoustic examples |
 | Build a simple baseline | `02_effnet_b0.ipynb` | Train and score a 5-second mel-spectrogram EfficientNet-B0 model |
-| Build the lead model | `03_perch_v2_train.ipynb` | Train a shallow classifier on frozen Google Perch v2 embeddings and package artifacts |
-| Submit the lead model | `04_perch_v2_submit.ipynb` | Load Perch artifacts, run CPU soundscape scoring, and write `submission.csv` |
+| Build the Perch baseline | `03_perch_v2_train.ipynb` | Train a shallow classifier on frozen Google Perch v2 embeddings and package artifacts |
+| Submit the Perch baseline | `04_perch_v2_submit.ipynb` | Load Perch artifacts, run CPU soundscape scoring, and write `submission.csv` |
+| Score ONNX blend baselines | `05`, `10`, `13` notebooks | Preserve fast SED, Perch + SED, and temporal residual submission paths |
+| Archive final champion | `14_eos9_public_ensemble_taxonomy_smoothing.ipynb` | Preserve the final EoS.9 public ensemble adaptation |
 
-The notebooks are intentionally ordered from understanding to baseline to stronger transfer model. EDA explains why validation, calibration, and runtime choices matter; EfficientNet validates the end-to-end Kaggle pipeline; Perch v2 training produces the strongest artifact, and the separate Perch submission notebook keeps CPU scoring lean.
+The notebooks are intentionally ordered from understanding to baseline to
+stronger transfer models and final submission archive. EDA explains why
+validation, calibration, and runtime choices matter; EfficientNet validates the
+end-to-end Kaggle pipeline; Perch and ONNX blends preserve project-owned
+modeling paths; notebook 14 preserves the final leaderboard champion.
 
 ## 4. Current Solution Approach
 
@@ -70,9 +77,11 @@ EfficientNet-B0 converts each 5-second clip into a normalized mel-spectrogram an
 
 This baseline is not the current leader, but it is useful for sanity checks, runtime comparison, and future ensembles.
 
-### 4.3 Perch v2 Lead Model
+### 4.3 Perch v2 Baseline
 
-Perch v2 uses a pretrained bioacoustic representation and trains a shallow PyTorch probe over frozen **1,536-dimensional embeddings**. This model currently leads the repo:
+Perch v2 uses a pretrained bioacoustic representation and trains a shallow
+PyTorch probe over frozen **1,536-dimensional embeddings**. This model was the
+first strong transfer-learning baseline:
 
 - Validation accuracy: **0.8392**.
 - Public score: **0.770**.
@@ -81,9 +90,18 @@ Perch v2 uses a pretrained bioacoustic representation and trains a shallow PyTor
 
 The result shows that foundation bioacoustic features transfer better than the small CNN baseline for this dataset.
 
-## 5. Next Questions
+### 4.4 Final Champion
 
-The next experiments are ordered by likely gain. The working roadmap lives in
+The final archived champion is
+`14_eos9_public_ensemble_taxonomy_smoothing.ipynb`, an adapted EoS.9 public
+ensemble with taxonomy smoothing. It reached **0.950 public / 0.941 private**.
+The strongest fully project-owned ONNX blend remains
+`13_onnx_perch_sed_temporal_residual.ipynb` at **0.898** public score.
+
+## 5. Post-Competition Questions
+
+The remaining experiments are research and reproducibility work rather than
+leaderboard pushes. The working roadmap lives in
 [06_next_steps.md](06_next_steps.md).
 
 1. **Can Perch predictions improve with soundscape priors?**

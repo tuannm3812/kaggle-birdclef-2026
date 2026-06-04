@@ -1,459 +1,93 @@
 # Next Steps
 
-## 1. Current Position
+## 1. Final Position
 
-ONNX Perch + SED soundscape-calibrated blend is the protected champion with a
-**0.893** public score. ONNX distilled SED remains the strongest simpler
-baseline at **0.822**, Perch v2 is the strongest older baseline at **0.770**,
-and EfficientNet-B0 remains the reliable PyTorch fallback at **0.646**.
+The competition run is archived with notebook 14 as the final leaderboard
+champion:
 
-The main risk is hidden-test runtime. Public notebook runs can pass with only
-three sample rows and no test audio, while real submissions must score hidden
-soundscapes. Every new experiment should therefore report validation quality and
-submission runtime risk.
+| Submission path | Public | Private | Role |
+|---|---:|---:|---|
+| `14_eos9_public_ensemble_taxonomy_smoothing.ipynb` | **0.950** | **0.941** | Final champion |
+| `13_onnx_perch_sed_temporal_residual.ipynb` | **0.898** | N/A | Strongest project-owned ONNX blend |
+| `10_onnx_perch_sed_soundscape_calibrated.ipynb` | **0.893** | N/A | Protected soundscape-calibrated baseline |
+| `05_onnx_sed_submit.ipynb` | **0.822** | N/A | Strong fast SED baseline |
+| `04_perch_v2_submit.ipynb` | **0.770** | N/A | Perch v2 reference |
+| `02_effnet_b0.ipynb` | **0.646** | N/A | CPU-safe fallback |
 
-## 2. Priority Experiments
+Notebook 14 should stay on the canonical v9 weights `[0.020, 0.013, 0.967]`.
+The v10-v13 weight probes all tied at **0.950 public / 0.941 private**, so
+there is no reason to keep the last probe configuration as the local notebook
+state.
 
-### 2.1 Freeze The Two Working Baselines
+## 2. Archive Priorities
 
-Status: urgent.
+### 2.1 Preserve Final Champion
 
-Goal: keep reproducible copies of the only two successful submissions.
-
-Work items:
-
-1. Preserve the exact EfficientNet-B0 version 9 notebook and artifact inputs.
-2. Preserve the exact Perch v2 version 14 notebook and artifact inputs.
-3. Record attached Kaggle inputs, artifact versions, public scores, and runtime.
-4. Avoid overwriting those notebooks while testing new variants.
-
-Success signal:
-
-- We can rerun or restore both baselines without guessing paths or versions.
-
-Deliverables:
-
-- Add a baseline registry table to `README.md` or `05_perch_v2_results.md`.
-- Keep experimental submission notebooks as separate versions, not replacements.
-
-### 2.2 Preserve Distilled SED ONNX Champion
-
-Status: succeeded with **0.822** public score.
-
-Goal: keep the new best submission reproducible before adding Perch back into
-the scoring path.
+Status: complete.
 
 Work items:
 
-1. Preserve `05_onnx_sed_submit.ipynb`.
-2. Record attached Kaggle inputs and notebook version.
-3. Avoid changing the champion notebook while testing ONNX Perch.
-4. Document the result in `docs/09_onnx_sed_results.md`.
-
-Success signal:
-
-- We can restore the **0.822** path without guessing inputs or code changes.
-
-Deliverables:
-
-- `docs/09_onnx_sed_results.md`.
-
-### 2.3 Test ONNX Perch Speed
-
-Status: succeeded in `06_onnx_perch_speed_test.ipynb`.
-
-Goal: measure whether ONNX Perch can replace the slower TensorFlow Perch
-submission path.
-
-Work items:
-
-1. Run `06_onnx_perch_speed_test.ipynb` on Kaggle.
-2. Attach the ONNX Perch no-DFT model input.
-3. Score hidden-style 60-second files as 12 contiguous 5-second windows.
-4. Report wall time per file and projected hidden-test runtime.
-5. Avoid blending, priors, sequence modeling, and heavy post-processing.
-
-Result:
-
-- The public dry-run timing used 20 `train_soundscapes` files.
-- Median runtime was **1.86 seconds per 60-second file**.
-- ONNX outputs were `(48, 14795)` label logits and `(48, 1536)` embeddings per
-  4-file batch.
-
-Deliverables:
-
-- `docs/10_onnx_perch_speed_results.md`.
-
-### 2.4 Preserve ONNX Perch + SED Champion
-
-Status: succeeded with **0.890** public score; superseded by proxy6 at
-**0.892**.
-
-Goal: keep the new best submission reproducible before testing variants.
-
-Work items:
-
-1. Preserve `archive/07_onnx_perch_sed_blend.ipynb`.
-2. Record attached Kaggle inputs and notebook version.
-3. Keep the exact-mapped conservative blend unchanged as the protected
-   champion.
-4. Document the result in `docs/11_onnx_perch_sed_blend_results.md`.
-
-Success signal:
-
-- We can restore the **0.890** path without guessing inputs or code changes.
-
-Deliverables:
-
-- `docs/11_onnx_perch_sed_blend_results.md`.
-
-### 2.5 Tune Simple Blend Variants
-
-Status: W0.25 tied the champion at **0.890**.
-
-Goal: test small changes around the champion without adding a fragile modeling
-stack.
-
-Work items:
-
-1. Preserve `archive/08_onnx_perch_sed_blend_w025.ipynb` as a tied variant.
-2. Save each variant as a clearly named Kaggle notebook version, not a
-   replacement for the champion.
-3. Record exact Perch mapping count and unmapped target classes from the run
-   output.
-4. Consider one genus-proxy variant only after exact-mapped blend-weight tests.
-
-Success signal:
-
-- A controlled variant improves over **0.890** without increasing timeout risk.
-
-Deliverables:
-
-- `docs/11_onnx_perch_sed_blend_results.md` updated with W0.25 result.
-
-### 2.6 Test Unmapped-Class Proxy Mapping
-
-Status: succeeded with **0.892** public score.
-
-Goal: improve target columns that exact scientific-name mapping leaves without
-direct Perch logits.
-
-Work items:
-
-1. Use `docs/12_perch_mapping_diagnostics.md` as the mapping review.
-2. Run `archive/09_onnx_perch_sed_blend_proxy6.ipynb`.
-3. Do not proxy the 25 anonymous insect sonotype columns.
-4. Restrict proxy mapping to named unmapped taxa only.
-5. Use conservative genus-level Perch proxies rather than changing mapped
-   classes.
-6. Keep the base blend weight unchanged unless the proxy variant needs a
-   separate tuning pass.
-
-Success signal:
-
-- A proxy-mapping variant improves over **0.890** without harming runtime.
-
-Deliverables:
-
-- `archive/09_onnx_perch_sed_blend_proxy6.ipynb`.
-- `docs/11_onnx_perch_sed_blend_results.md` updated with proxy6 result.
-
-### 2.7 Tune Proxy Weight
-
-Status: deferred.
-
-Goal: check whether the proxy contribution can improve slightly beyond
-**0.892** without changing the full exact-mapped blend.
-
-Work items:
-
-1. Preserve `archive/09_onnx_perch_sed_blend_proxy6.ipynb` as the new champion.
-2. Create only one proxy-weight variant at a time.
-3. Keep exact-mapped `perch_weight = 0.15`.
-4. Try `proxy_weight = 0.08` or `0.10` before adding any new post-processing.
-
-Success signal:
-
-- A proxy-weight variant improves over **0.892** without harming runtime.
-
-Deliverables:
-
-- A clearly named notebook variant only if we decide to spend another
-  submission on proxy tuning.
-
-### 2.8 Soundscape-Calibrated Blend
-
-Status: succeeded with **0.893** public score.
-
-Goal: move toward the higher-scoring sequence-model direction by using labeled
-train-soundscape windows to learn per-class blend weights.
-
-Work items:
-
-1. Preserve `archive/09_onnx_perch_sed_blend_proxy6.ipynb` as the **0.892** champion.
-2. Run `10_onnx_perch_sed_soundscape_calibrated.ipynb`.
-3. Score labeled train-soundscape windows with the same SED and Perch
-   components used for hidden test.
-4. Learn lightweight per-class blend weights from a small grid.
-5. Save `soundscape_blend_calibration.csv` for inspection.
-
-Success signal:
-
-- The calibrated blend improves over **0.892** without timing out.
-
-Deliverables:
-
-- `10_onnx_perch_sed_soundscape_calibrated.ipynb`.
-- `soundscape_blend_calibration.csv` from the run.
-
-### 2.9 Inspect Soundscape Calibration Diagnostics
-
-Status: completed in `docs/13_soundscape_calibration_diagnostics.md`.
-
-Goal: decide whether the calibration gain can be improved safely.
-
-Work items:
-
-1. Review `soundscape_blend_calibration.csv`.
-2. Count classes that moved away from default blend weights.
-3. Identify classes with enough positives and clear AP improvement.
-4. Check whether many classes moved to extreme weights because of sparse labels.
-5. Decide whether a smoothed or support-thresholded calibration variant is worth
-   one more submission.
-
-Success signal:
-
-- We can explain why the calibrated notebook improved to **0.893** and identify
-  a low-risk next variant.
-
-Deliverables:
-
-- `docs/13_soundscape_calibration_diagnostics.md`.
-
-### 2.10 Test Support-Thresholded Calibration
-
-Status: did not improve; public score was **0.892**.
-
-Goal: keep the useful soundscape calibration signal while reducing sparse-label
-overfit risk.
-
-Work items:
-
-1. Preserve `10_onnx_perch_sed_soundscape_calibrated.ipynb` as the **0.893**
-   champion.
-2. Run `archive/11_onnx_perch_sed_calibrated_min10_ap001.ipynb`.
-3. Apply learned weights only when a class has at least **10** positives.
-4. Optionally require AP gain of at least **0.01** before changing the default
-   weight.
-5. Keep proxy handling unchanged.
-
-Success signal:
-
-- The result confirmed that hard support/AP thresholds are not better than the
-  current **0.893** calibration.
-
-Deliverables:
-
-- `archive/11_onnx_perch_sed_calibrated_min10_ap001.ipynb`.
-
-### 2.11 Test Shrunk Calibration
-
-Status: deprioritized after the deadline pivot toward larger model changes.
-
-Goal: keep the useful low-support calibration signal while reducing overfit more
-gently than the hard min10/AP0.01 threshold.
-
-Work items:
-
-1. Preserve `10_onnx_perch_sed_soundscape_calibrated.ipynb` as the **0.893**
-   champion.
-2. Run `archive/12_onnx_perch_sed_calibrated_shrink050.ipynb`.
-3. Start from the calibrated weights in notebook `10`.
-4. Shrink learned weights partway back toward their default weights, rather than
-   dropping changes completely.
-5. Keep proxy handling unchanged.
-
-Success signal:
-
-- A shrunk-calibration variant improves over **0.893** or ties without losing
-  the useful calibration signal.
-
-Deliverables:
-
-- `archive/12_onnx_perch_sed_calibrated_shrink050.ipynb`.
-
-### 2.12 Test Temporal Residual Blend
-
-Status: active in `13_onnx_perch_sed_temporal_residual.ipynb`.
-
-Goal: make one larger but still controlled leaderboard attempt before the
-deadline instead of spending submissions on tiny calibration knobs.
-
-Work items:
-
-1. Preserve `10_onnx_perch_sed_soundscape_calibrated.ipynb` as the **0.893**
-   champion.
-2. Reuse the champion's ONNX SED, ONNX Perch mapping, proxy mapping, and
-   soundscape-calibrated class weights.
-3. Score labeled train-soundscape windows and collect Perch embeddings.
-4. Train a compact temporal residual model using current, previous, and next
-   calibrated window probabilities plus Perch embeddings.
-5. Blend the residual model lightly with the calibrated champion prediction.
-6. Save `temporal_residual_history.csv` for run diagnostics.
-
-Success signal:
-
-- Public score improves over **0.893** without adding a hidden-test timeout
-  risk.
-- If it fails, the failure is informative: the next remaining work should move
-  to model diversity or external higher-scoring public notebook ideas, not more
-  calibration shrinkage.
-
-Deliverables:
-
-- `13_onnx_perch_sed_temporal_residual.ipynb`.
-- `temporal_residual_history.csv` from the Kaggle run.
-
-### 2.13 Add Perch Soundscape Priors
-
-Status: implemented in `03_perch_v2_train.ipynb`; needs a fresh Kaggle train run and
-leaderboard validation.
-
-Goal: use labeled soundscape structure without overfitting it.
-
-Work items:
-
-1. Deduplicate `train_soundscapes_labels.csv` by soundscape file and window.
-2. Build simple prior tables for species by hour, site, and co-occurrence.
-3. Apply small logit offsets to Perch predictions.
-4. Tune offsets on held-out soundscape-like windows, not on leaderboard alone.
-
-Success signal:
-
-- Public score improves or stays stable while per-window soundscape diagnostics
-  improve.
-- No large boost for species with tiny or unreliable support.
-
-Deliverables:
-
-- Updated `03_perch_v2_train.ipynb` and `04_perch_v2_submit.ipynb`.
-- A small prior summary table saved by the training notebook.
-- A note added to `05_perch_v2_results.md`.
-
-### 2.14 Inspect Weak Labels
-
-Status: implemented in `03_perch_v2_train.ipynb` via
-`weak_label_diagnostics.csv`; needs review after the next training run.
-
-Goal: identify where Perch is confidently wrong or missing rare/non-bird taxa.
-
-Work items:
-
-1. Use `per_class_validation_metrics.csv` from the Perch notebook.
-2. Rank labels by low top-1 recall, low top-5 recall, and high confidence error.
-3. Cross-check weak labels against class count, taxonomic group, rating, and
-   secondary-label frequency.
-4. Create a short table of the top action labels.
-
-Success signal:
-
-- Clear split between calibration problems, class-confusion problems, and data
-  coverage problems.
-
-Deliverables:
-
-- Add a weak-label section to `05_perch_v2_results.md`.
-- Optional figure under `docs/figures/perch/`.
-
-### 2.15 Test Lightweight Calibration
-
-Status: implemented in `03_perch_v2_train.ipynb` via `temperature_grid.csv` and
-`calibration.json`; needs a controlled submission test through
-`04_perch_v2_submit.ipynb`.
-
-Goal: improve probability ranking without retraining the embedding model.
-
-Work items:
-
-1. Add temperature scaling for Perch probe logits.
-2. Test class-level bias terms based on validation prevalence.
-3. Compare global calibration versus rare-class-specific calibration.
-4. Keep submission output as probabilities for all target columns.
-
-Success signal:
-
-- Better validation log loss or ranking proxy.
-- Public score improves without slower inference.
-
-Deliverables:
-
-- Calibration config in `03_perch_v2_train.ipynb` and scoring use in
-  `04_perch_v2_submit.ipynb`.
-- Updated result table in `05_perch_v2_results.md`.
-
-### 2.16 Compare Perch And EfficientNet Errors
-
-Goal: decide whether an ensemble is worth the CPU cost.
-
-Work items:
-
-1. Save compatible validation predictions from both notebooks.
-2. Join predictions by validation row.
-3. Measure cases where EfficientNet is right and Perch is wrong.
-4. Estimate ensemble gain before implementing submission blending.
-
-Success signal:
-
-- EfficientNet adds meaningful unique wins, especially on labels Perch misses.
-
-Deliverables:
-
-- Error-overlap table in either `04_effnet_b0_results.md` or
-  `05_perch_v2_results.md`.
-- If useful, a simple weighted-average submission path.
-
-### 2.17 Distill Perch Into A Faster Student
-
-Goal: reduce dependency on TensorFlow Perch inference if scoring runtime becomes
-fragile.
-
-Work items:
-
-1. Generate Perch soft labels for clean clips and selected soundscape windows.
-2. Train an EfficientNet or small audio CNN student on hard plus soft targets.
-3. Compare runtime, validation score, and public score against both existing
+1. Keep `14_eos9_public_ensemble_taxonomy_smoothing.ipynb` as the canonical
+   final notebook.
+2. Keep
+   `notebooks/metadata/14_eos9_public_ensemble_taxonomy_smoothing/kernel-metadata.json`
+   with the Kaggle kernel slug and attached inputs.
+3. Keep `docs/14_eos9_final_results.md` as the final score source of truth.
+4. Treat the v10-v13 weight probes as recorded result variants, not separate
    notebooks.
 
-Success signal:
+### 2.2 Preserve Project-Owned Baselines
 
-- Student closes part of the gap to Perch while keeping PyTorch-only inference.
+Status: complete.
 
-Deliverables:
+Work items:
 
-- New notebook only if the workflow becomes distinct enough, likely
-  `04_perch_distillation.ipynb`.
-- Result document only after a successful Kaggle run.
+1. Keep `02_effnet_b0.ipynb` and `04_perch_v2_submit.ipynb` as the original
+   reproducible baseline submissions.
+2. Keep `05_onnx_sed_submit.ipynb` as the strong non-blended ONNX path.
+3. Keep `10_onnx_perch_sed_soundscape_calibrated.ipynb` and
+   `13_onnx_perch_sed_temporal_residual.ipynb` as the strongest project-owned
+   blend paths.
+4. Keep archived variants under `notebooks/archive/` for reproducibility, but
+   do not continue editing them during cleanup.
 
-## 3. Recommended Order
+### 2.3 Keep Operational Helpers Small
 
-1. Preserve the **0.893** soundscape-calibrated champion.
-2. Select the **0.893** calibrated blend and **0.822** ONNX SED submissions for final-score
-   tracking unless a stronger variant appears.
-3. Use the W0.25 tie as evidence that higher Perch weight alone is not enough.
-4. Use the proxy6 improvement as evidence that targeted mapping changes help.
-5. Run `13_onnx_perch_sed_temporal_residual.ipynb` as the next larger
-   experiment. It is the best current use of limited daily submissions because
-   it changes the modeling surface instead of tuning another scalar.
+Status: retained for reproducibility.
+
+The scripts under `scripts/` are Kaggle status helpers used during the final
+submission window. They should stay small and shell-only:
+
+- `check_notebook14_submission.sh`
+- `watch_notebook14_submission.sh`
+- `check_notebook14_weight_submissions.sh`
+- `watch_notebook14_weight_submissions.sh`
+
+Do not add large orchestration frameworks unless the repo is revived for a new
+competition.
+
+## 3. Research Backlog
+
+These ideas are useful after the competition, but they should not be presented
+as pending leaderboard work:
+
+1. Build a run registry from notebook metadata, public/private scores, artifact
+   inputs, and output paths.
+2. Convert reusable feature extraction and submission validation code into
+   small modules if another BirdCLEF season starts.
+3. Compare the final EoS.9 route outputs against the project-owned ONNX blends
+   to identify which taxa drove the `0.898 -> 0.950` jump.
+4. Revisit Perch soundscape priors, weak-label diagnostics, and distillation
+   only if there is a fresh validation target or a new competition split.
+5. Add a lightweight CI check that validates notebook JSON and scans submission
+   notebooks for missing `submission.csv` validation.
 
 ## 4. Guardrails
 
-- Do not optimize only against the public leaderboard.
-- Do not assume public dry runs measure hidden-test runtime; public runs can have
-  three rows and zero audio files.
-- Do not add heavy test-time augmentation until CPU runtime is measured.
-- Do not use raw soundscape label counts without deduplication.
-- Keep the Perch training and submission notebooks split because artifact
-  management and CPU scoring now have different constraints.
-- Keep direct TensorFlow Perch notebooks as protected references, not the active
-  improvement lane.
-- Keep attached model artifacts and wheelhouses outside git.
+- Keep model artifacts, Kaggle inputs, and generated submissions outside git.
+- Keep protected notebooks reproducible; avoid editing historical winners just
+  for style.
+- Record public references in docs before adapting them into project notebooks.
+- Prefer notebook-first workflows for Kaggle submission paths, with scripts only
+  for push/status operations.
+- Do not interpret public dry runs as hidden-test runtime measurements.

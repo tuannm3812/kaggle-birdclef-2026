@@ -1,5 +1,9 @@
 # Notebook-First Run Tracker Implementation Plan
 
+Status: historical implementation plan. The final competition archive is
+documented in `docs/14_eos9_final_results.md`; notebook 14 became the final
+champion after this plan was drafted.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build a notebook-first Kaggle run tracker with metadata validation,
@@ -104,7 +108,9 @@ perch_v2_v14,,2026-06-03,notebooks/04_perch_v2_submit.ipynb,0.770,protected_base
 onnx_sed_v2,,2026-06-03,notebooks/05_onnx_sed_submit.ipynb,0.822,protected_baseline,true,See docs/09_onnx_sed_results.md,,Protected ONNX SED baseline,Keep unchanged
 onnx_perch_sed_exact_v2,,2026-06-03,notebooks/archive/07_onnx_perch_sed_blend.ipynb,0.890,protected_baseline,true,See docs/11_onnx_perch_sed_blend_results.md,,Historical exact-mapped ONNX Perch plus SED blend,Keep archived
 onnx_perch_sed_proxy6_v1,,2026-06-03,notebooks/archive/09_onnx_perch_sed_blend_proxy6.ipynb,0.892,protected_baseline,true,See docs/11_onnx_perch_sed_blend_results.md,,Historical narrow proxy-mapped blend,Keep archived
-onnx_perch_sed_calibrated_v2,,2026-06-03,notebooks/10_onnx_perch_sed_soundscape_calibrated.ipynb,0.893,champion,true,See docs/13_soundscape_calibration_diagnostics.md,soundscape_blend_calibration.csv,Current protected champion,Keep unchanged unless a stronger notebook is promoted
+onnx_perch_sed_calibrated_v2,,2026-06-03,notebooks/10_onnx_perch_sed_soundscape_calibrated.ipynb,0.893,protected_baseline,true,See docs/13_soundscape_calibration_diagnostics.md,soundscape_blend_calibration.csv,Protected soundscape-calibrated baseline,Keep unchanged
+onnx_perch_sed_temporal_residual_v2,,2026-06-04,notebooks/13_onnx_perch_sed_temporal_residual.ipynb,0.898,protected_baseline,true,See docs/11_onnx_perch_sed_blend_results.md,temporal_residual_history.csv,Strongest project-owned ONNX blend,Keep unchanged
+eos9_final_v9,,2026-06-04,notebooks/14_eos9_public_ensemble_taxonomy_smoothing.ipynb,0.950,final_champion,true,See docs/14_eos9_final_results.md,submission.csv,Final public/private score 0.950/0.941,Keep canonical v9 weights
 ```
 
 - [ ] **Step 4: Verify CSV headers**

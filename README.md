@@ -8,148 +8,67 @@
   <a href="https://www.kaggle.com/competitions/birdclef-2026">
     <img src="https://img.shields.io/badge/Kaggle-BirdCLEF%2B%202026-20BEFF?logo=kaggle&logoColor=white" alt="Kaggle competition">
   </a>
-  <img src="https://img.shields.io/badge/Notebook-EDA%20%7C%20EffNet%20%7C%20Perch%20%7C%20ONNX%20SED-F37626?logo=jupyter" alt="Notebook workflow">
-  <img src="https://img.shields.io/badge/Public-EffNet%200.646%20%7C%20SED%200.822%20%7C%20Blend%200.893-2EA44F" alt="Public scores">
+  <img src="https://img.shields.io/badge/Workflow-Notebook--first-F37626?logo=jupyter" alt="Notebook-first workflow">
+  <img src="https://img.shields.io/badge/Final-Public%200.950%20%7C%20Private%200.941-2EA44F" alt="Final score">
 </p>
 
-BirdCLEF+ 2026 bioacoustic classification workspace for identifying wildlife
-species in Brazilian Pantanal soundscapes. The project documents the path from
-dataset understanding to a reliable EfficientNet-B0 baseline, a stronger Google
-Perch v2 transfer-learning model, and a stronger ONNX Perch + SED blend.
+BirdCLEF+ 2026 bioacoustic classification workspace for Brazilian Pantanal
+soundscapes. The repository is now a post-competition research archive: it
+preserves the final leaderboard notebook, the project-owned baseline notebooks,
+Kaggle metadata, operational scripts, and result notes needed to understand the
+full experiment path.
 
-## 1. Competition Snapshot
+## Final Result
 
-The competition asks participants to identify wildlife species in Brazilian Pantanal soundscapes. During scoring, hidden `test_soundscapes/` are mounted and each 1-minute file is scored as **12 contiguous 5-second windows** with probability columns for the target species.
+| Result | Value |
+|---|---:|
+| Final champion | `14_eos9_public_ensemble_taxonomy_smoothing.ipynb` |
+| Public leaderboard | **0.950** |
+| Private leaderboard | **0.941** |
+| Canonical blend weights | `[0.020, 0.013, 0.967]` |
+| Best project-owned ONNX blend | **0.898** public |
+| Strong simple ONNX baseline | **0.822** public |
 
-The task is multi-taxon rather than bird-only. The target set includes birds,
-amphibians, mammals, reptiles, and insects, so the problem is closer to
-ecosystem soundscape recognition than ordinary single-species bird-call
-classification.
+The final notebook adapts the reviewed EoS.9 public ensemble into the project
+style, keeps the three active inference routes, enables taxonomy smoothing, and
+validates the generated `submission.csv`. Four final weight probes tied the
+canonical score, so the repository keeps version 9 as the reproducible champion.
 
-## 2. Key Highlights
+Final score details: [docs/14_eos9_final_results.md](docs/14_eos9_final_results.md).
 
-| Area | Result |
-|---|---|
-| Dataset scale | **35,549** training recordings across **206** primary labels |
-| Output contract | **234** species probability columns |
-| Soundscape labels | **739** deduplicated labeled 5-second windows |
-| EfficientNet-B0 | **0.5464** best validation accuracy, **0.646** public score |
-| Perch v2 probe | **0.8392** best validation accuracy, **0.770** public score |
-| ONNX distilled SED | **0.822** public score |
-| ONNX Perch + SED calibrated blend | **0.893** public score |
-| Best gain | ONNX Perch + SED improved public score by **+0.247** over EfficientNet-B0 |
+## Competition Context
 
-Project overview and approach: [docs/01_project_overview.md](docs/01_project_overview.md).
+BirdCLEF+ 2026 asks participants to identify wildlife species in hidden
+1-minute Pantanal soundscape recordings. Each soundscape is scored as **12
+contiguous 5-second windows**, and each row in `submission.csv` contains
+probabilities for **234** target species columns.
 
-## 3. What We Achieved
+This is a multi-taxon soundscape task rather than a bird-only clean-clip task.
+The target set includes birds, amphibians, mammals, reptiles, and insects, so
+calibration, domain shift, class imbalance, and CPU-safe hidden-test inference
+are central constraints.
 
-- Built a structured EDA notebook that audits label quality, class imbalance,
-  metadata shift, soundscape overlap, and representative spectrograms.
-- Trained a compact EfficientNet-B0 mel-spectrogram baseline that remains a
-  dependable PyTorch fallback.
-- Trained a shallow classifier on frozen **1,536-dimensional** Google Perch v2
-  embeddings, producing the first strong transfer-learning result.
-- Promoted a distilled SED ONNX submission path, then improved it with fast
-  ONNX Perch logits to reach the best current public score in the repo.
-- Optimized the Perch scoring path for CPU by reading full 60-second
-  soundscapes once and reshaping them into **12** contiguous 5-second windows.
-- Added lightweight result documentation so EDA findings, model behavior, and
-  next experiments are easy to review without opening every notebook.
+## Project Progression
 
-## 4. Lessons Learned
+| Stage | Notebook | Public score | Role |
+|---|---|---:|---|
+| EDA | `01_eda.ipynb` | N/A | Dataset, label, and soundscape audit |
+| EfficientNet-B0 | `02_effnet_b0.ipynb` | **0.646** | PyTorch fallback |
+| Perch v2 probe | `03`, `04` notebooks | **0.770** | Transfer-learning reference |
+| Distilled SED ONNX | `05_onnx_sed_submit.ipynb` | **0.822** | Strong simple ONNX baseline |
+| ONNX Perch + SED proxy blend | `archive/09_onnx_perch_sed_blend_proxy6.ipynb` | **0.892** | Mapping milestone |
+| Soundscape-calibrated blend | `10_onnx_perch_sed_soundscape_calibrated.ipynb` | **0.893** | Protected baseline |
+| Temporal residual blend | `13_onnx_perch_sed_temporal_residual.ipynb` | **0.898** | Best project-owned ONNX blend |
+| EoS.9 public ensemble | `14_eos9_public_ensemble_taxonomy_smoothing.ipynb` | **0.950** | Final champion, **0.941** private |
 
-- Foundation bioacoustic features transfer much better than a small CNN trained
-  from scratch for this dataset.
-- Clean-clip validation is useful but incomplete; labeled soundscape windows are
-  closer to hidden scoring and should guide calibration.
-- Class imbalance is severe enough that aggregate accuracy can hide weak rare
-  labels and non-bird taxa.
-- Secondary labels and co-occurrence patterns are valuable, but they should be
-  introduced after the single-label pipeline is stable.
-- CPU-safe inference matters as much as model quality because Kaggle scoring
-  depends on finishing hidden soundscape inference inside the runtime limit.
+The main score jump came from moving from direct Perch and compact SED
+baselines to richer ensemble routes while preserving a notebook-first Kaggle
+submission workflow.
 
-## 5. Notebooks
-
-Active notebooks:
-
-| Notebook | Purpose |
-|---|---|
-| [01_eda.ipynb](notebooks/01_eda.ipynb) | Dataset audit, class imbalance, secondary labels, metadata bias, soundscape domain analysis, and spectrogram inspection |
-| [02_effnet_b0.ipynb](notebooks/02_effnet_b0.ipynb) | EfficientNet-B0 training plus fast checkpoint-based submission mode |
-| [03_perch_v2_train.ipynb](notebooks/03_perch_v2_train.ipynb) | Perch v2 probe training, diagnostics, calibration, and artifact packaging |
-| [04_perch_v2_submit.ipynb](notebooks/04_perch_v2_submit.ipynb) | Lean Perch v2 scoring notebook for CPU Kaggle submission |
-| [05_onnx_sed_submit.ipynb](notebooks/05_onnx_sed_submit.ipynb) | Protected distilled SED ONNX champion submission |
-| [06_onnx_perch_speed_test.ipynb](notebooks/06_onnx_perch_speed_test.ipynb) | ONNX Perch runtime experiment |
-| [10_onnx_perch_sed_soundscape_calibrated.ipynb](notebooks/10_onnx_perch_sed_soundscape_calibrated.ipynb) | Protected soundscape-calibrated champion submission |
-| [13_onnx_perch_sed_temporal_residual.ipynb](notebooks/13_onnx_perch_sed_temporal_residual.ipynb) | Active temporal residual blend experiment |
-
-Archived experiment notebooks:
-
-| Notebook | Purpose |
-|---|---|
-| [07_onnx_perch_sed_blend.ipynb](notebooks/archive/07_onnx_perch_sed_blend.ipynb) | Historical 0.890 exact ONNX Perch + SED blend |
-| [08_onnx_perch_sed_blend_w025.ipynb](notebooks/archive/08_onnx_perch_sed_blend_w025.ipynb) | Historical Perch weight 0.25 variant |
-| [09_onnx_perch_sed_blend_proxy6.ipynb](notebooks/archive/09_onnx_perch_sed_blend_proxy6.ipynb) | Historical 0.892 narrow proxy-mapping milestone |
-| [11_onnx_perch_sed_calibrated_min10_ap001.ipynb](notebooks/archive/11_onnx_perch_sed_calibrated_min10_ap001.ipynb) | Historical support-thresholded calibration variant |
-| [12_onnx_perch_sed_calibrated_shrink050.ipynb](notebooks/archive/12_onnx_perch_sed_calibrated_shrink050.ipynb) | Historical shrunk-calibration variant |
-
-ONNX Perch + SED soundscape-calibrated blend is now the protected champion. ONNX distilled SED remains the
-strongest simpler baseline, Perch v2 version 14 remains a useful reference, and
-EfficientNet-B0 remains the simplest fallback.
-
-## 6. Key EDA Findings
-
-- **35,549** recordings across **206** primary labels.
-- Complete taxonomy coverage for train labels: **206/206**.
-- No duplicate rows in `train.csv`, `taxonomy.csv`, or `sample_submission.csv`.
-- `train_soundscapes_labels.csv` deduplicates from **1,478** rows to **739** unique soundscape segments.
-- Median class size is **125** recordings; the range is **1-499**.
-- Top **30** labels account for **40.3%** of training recordings.
-- Secondary labels include **161** distinct labels and **7,431** mentions.
-- Deduplicated soundscape segments are strongly multi-label, with a median of **4** labels and a maximum of **10**.
-
-Full analysis: [docs/03_eda_insights.md](docs/03_eda_insights.md).
-
-## 7. Model Results
-
-| Model | Representation | Best validation accuracy | Public score | Role |
-|---|---|---:|---:|---|
-| EfficientNet-B0 | 5-second mel-spectrogram | **0.5464** | **0.646** | Reliable fallback |
-| Perch v2 probe | Frozen 1,536-d embeddings | **0.8392** | **0.770** | Protected baseline |
-| ONNX distilled SED | 5-fold SED ONNX student | N/A | **0.822** | Protected baseline |
-| ONNX Perch + SED proxy6 | Exact/proxy-mapped Perch logits + SED | N/A | **0.892** | Protected baseline |
-| ONNX Perch + SED calibrated | Soundscape-calibrated blend | N/A | **0.893** | Current champion |
-
-Successful Kaggle submissions to preserve:
-
-| Submission | Public score | Current role | Next action |
-|---|---:|---|---|
-| EfficientNet-B0 version 9 | **0.646** | CPU-safe fallback | Keep exact notebook and artifact inputs unchanged |
-| Perch v2 version 14 | **0.770** | Protected baseline | Keep as reference while moving new work to ONNX |
-| ONNX distilled SED version 2 | **0.822** | Protected baseline | Keep as strong non-blended comparison |
-| ONNX Perch + SED blend version 2 | **0.890** | Protected baseline | Preserve exact-mapped blend |
-| ONNX Perch + SED proxy6 version 1 | **0.892** | Protected baseline | Preserve proxy-mapped blend |
-| ONNX Perch + SED calibrated version 2 | **0.893** | Current champion | Preserve; inspect calibration diagnostics next |
-
-Result notes:
-
-- [EfficientNet-B0 results](docs/04_effnet_b0_results.md)
-- [Perch v2 results](docs/05_perch_v2_results.md)
-- [Distilled SED review](docs/07_distilled_sed_review.md)
-- [ProtoSSM review](docs/08_protossm_review.md)
-- [ONNX SED results](docs/09_onnx_sed_results.md)
-- [ONNX Perch speed results](docs/10_onnx_perch_speed_results.md)
-- [ONNX Perch + SED blend results](docs/11_onnx_perch_sed_blend_results.md)
-- [Perch mapping diagnostics](docs/12_perch_mapping_diagnostics.md)
-- [Soundscape calibration diagnostics](docs/13_soundscape_calibration_diagnostics.md)
-- [Next steps](docs/06_next_steps.md)
-
-## 8. Repository Layout
+## Repository Layout
 
 ```text
 notebooks/
-  README.md
   01_eda.ipynb
   02_effnet_b0.ipynb
   03_perch_v2_train.ipynb
@@ -158,12 +77,9 @@ notebooks/
   06_onnx_perch_speed_test.ipynb
   10_onnx_perch_sed_soundscape_calibrated.ipynb
   13_onnx_perch_sed_temporal_residual.ipynb
+  14_eos9_public_ensemble_taxonomy_smoothing.ipynb
+  metadata/
   archive/
-    07_onnx_perch_sed_blend.ipynb
-    08_onnx_perch_sed_blend_w025.ipynb
-    09_onnx_perch_sed_blend_proxy6.ipynb
-    11_onnx_perch_sed_calibrated_min10_ap001.ipynb
-    12_onnx_perch_sed_calibrated_shrink050.ipynb
 
 docs/
   01_project_overview.md
@@ -179,8 +95,76 @@ docs/
   11_onnx_perch_sed_blend_results.md
   12_perch_mapping_diagnostics.md
   13_soundscape_calibration_diagnostics.md
-  figures/eda/
+  14_eos9_final_results.md
+
+scripts/
+  check_notebook14_submission.sh
+  check_notebook14_weight_submissions.sh
+  watch_notebook14_submission.sh
+  watch_notebook14_weight_submissions.sh
 ```
 
-Standards: [docs/02_coding_standards.md](docs/02_coding_standards.md).
-Notebook promotion rules: [notebooks/README.md](notebooks/README.md).
+Generated submissions, Kaggle datasets, model weights, ONNX files, waveform
+caches, and local artifacts stay outside git.
+
+## Maintained Notebooks
+
+| Notebook | Purpose |
+|---|---|
+| [01_eda.ipynb](notebooks/01_eda.ipynb) | Dataset audit, label coverage, soundscape diagnostics, and EDA figures |
+| [02_effnet_b0.ipynb](notebooks/02_effnet_b0.ipynb) | EfficientNet-B0 training and CPU-safe submission fallback |
+| [03_perch_v2_train.ipynb](notebooks/03_perch_v2_train.ipynb) | Perch v2 probe training, diagnostics, calibration, and artifact packaging |
+| [04_perch_v2_submit.ipynb](notebooks/04_perch_v2_submit.ipynb) | Lean Perch v2 CPU scoring notebook |
+| [05_onnx_sed_submit.ipynb](notebooks/05_onnx_sed_submit.ipynb) | Protected distilled SED ONNX baseline |
+| [06_onnx_perch_speed_test.ipynb](notebooks/06_onnx_perch_speed_test.ipynb) | ONNX Perch runtime experiment |
+| [10_onnx_perch_sed_soundscape_calibrated.ipynb](notebooks/10_onnx_perch_sed_soundscape_calibrated.ipynb) | Protected soundscape-calibrated ONNX blend |
+| [13_onnx_perch_sed_temporal_residual.ipynb](notebooks/13_onnx_perch_sed_temporal_residual.ipynb) | Best project-owned ONNX blend |
+| [14_eos9_public_ensemble_taxonomy_smoothing.ipynb](notebooks/14_eos9_public_ensemble_taxonomy_smoothing.ipynb) | Final archived EoS.9 champion |
+
+Historical experiments live under [notebooks/archive](notebooks/archive). See
+[notebooks/README.md](notebooks/README.md) for promotion and preservation
+rules.
+
+## Key Findings
+
+- Training data contains **35,549** recordings across **206** primary labels.
+- The submission contract requires **234** target probability columns.
+- Labeled train soundscapes deduplicate from **1,478** rows to **739** unique
+  5-second windows.
+- The task has severe class imbalance: median class size is **125**, with a
+  range of **1-499** recordings.
+- Foundation bioacoustic features and public ensemble diversity transferred far
+  better than a small CNN trained from scratch.
+- Public notebook dry runs are not reliable hidden-test runtime checks because
+  hidden `test_soundscapes/` are only mounted during scoring.
+
+Full EDA notes: [docs/03_eda_insights.md](docs/03_eda_insights.md).
+
+## Reproducibility Notes
+
+- Kaggle remains the execution environment for submission notebooks.
+- Notebook 14 metadata is tracked at
+  [notebooks/metadata/14_eos9_public_ensemble_taxonomy_smoothing/kernel-metadata.json](notebooks/metadata/14_eos9_public_ensemble_taxonomy_smoothing/kernel-metadata.json).
+- The final Kaggle kernel slug is
+  `tuannm3812/birdclef-2026-eos9-public-ensemble-taxonomy`.
+- Direct CSV upload returned a Kaggle `400` response for this code competition;
+  final submissions were made by pushing notebook versions and submitting the
+  generated kernel output.
+- The scripts in `scripts/` are lightweight Kaggle status helpers. They expect
+  the Kaggle CLI and allow `KAGGLE_CLI` / `KAGGLE_CONFIG_DIR` overrides.
+
+## Documentation Index
+
+| Document | Purpose |
+|---|---|
+| [Project overview](docs/01_project_overview.md) | Competition framing and solution architecture |
+| [Coding standards](docs/02_coding_standards.md) | Notebook and code conventions |
+| [EDA insights](docs/03_eda_insights.md) | Dataset and soundscape findings |
+| [EfficientNet-B0 results](docs/04_effnet_b0_results.md) | PyTorch baseline notes |
+| [Perch v2 results](docs/05_perch_v2_results.md) | Perch probe results and diagnostics |
+| [ONNX SED results](docs/09_onnx_sed_results.md) | Distilled SED milestone |
+| [ONNX Perch speed results](docs/10_onnx_perch_speed_results.md) | CPU runtime experiment |
+| [ONNX Perch + SED blend results](docs/11_onnx_perch_sed_blend_results.md) | Blend history and interpretation |
+| [Soundscape calibration diagnostics](docs/13_soundscape_calibration_diagnostics.md) | Calibration analysis |
+| [EoS.9 final results](docs/14_eos9_final_results.md) | Final public/private result record |
+| [Next steps](docs/06_next_steps.md) | Post-competition archive and research backlog |

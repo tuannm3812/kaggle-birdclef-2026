@@ -2,12 +2,13 @@
 
 ## 1. Summary
 
-The distilled SED ONNX submission is now the best public result in this
-workspace.
+This document records the distilled SED ONNX milestone. It was later
+superseded by ONNX Perch + SED blends and by the final EoS.9 notebook, but it
+remains the strongest simple non-blended baseline in this workspace.
 
 | Submission | Notebook | Public score | Status |
 |---|---|---:|---|
-| ONNX distilled SED version 1 | `05_onnx_sed_submit.ipynb` | **0.822** | New champion |
+| ONNX distilled SED version 1 | `05_onnx_sed_submit.ipynb` | **0.822** | Protected baseline |
 | Perch v2 version 14 | `04_perch_v2_submit.ipynb` | **0.770** | Protected baseline |
 | EfficientNet-B0 version 9 | `02_effnet_b0.ipynb` | **0.646** | CPU-safe fallback |
 
@@ -30,9 +31,9 @@ Important strengths:
 
 ## 3. Interpretation
 
-This should become the new protected champion until another submission beats it.
-The previous Perch v2 version 14 remains valuable, but mainly as a baseline and
-source of modeling ideas. New leaderboard work should stay in the ONNX lane.
+This became the protected baseline at the time and remains valuable as a source
+of modeling ideas. Later leaderboard work stayed in the ONNX lane before the
+final EoS.9 adaptation.
 
 The score also suggests that full 234-column SED modeling plus temporal
 smoothing is more competition-aligned than a 206-class clean-clip Perch probe.
