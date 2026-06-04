@@ -1,8 +1,8 @@
 # Notebook-First Run Tracker Design
 
 Status: historical design note. The final competition archive is documented in
-`docs/14_eos9_final_results.md`; notebook 14 superseded the notebook 13 active
-lane described below.
+`docs/14_final_public_ensemble_results.md`; the final ensemble notebook
+superseded the notebook 13 active lane described below.
 
 ## 1. Purpose
 
@@ -185,7 +185,7 @@ Recommended order:
 
 Notebook `13` was the active lane at the time because it reused the 0.893
 soundscape-calibrated path while testing a controlled temporal residual model.
-It later reached 0.898 public score before notebook 14 became the final
+It later reached 0.898 public score before the final ensemble notebook became the final
 champion.
 
 ## 7. Reproducibility Roadmap
@@ -202,7 +202,7 @@ Recommended order:
    - ONNX Perch + SED proxy6 public score 0.892.
    - ONNX Perch + SED soundscape-calibrated public score 0.893.
    - ONNX Perch + SED temporal residual public score 0.898.
-   - EoS.9 final public/private score 0.950/0.941.
+   - Final public ensemble public/private score 0.950/0.941.
 3. Add Kaggle metadata for active notebook `13`, then notebook `14` after it is
    promoted.
 4. Add metadata for protected notebooks only when they need to be pushed or

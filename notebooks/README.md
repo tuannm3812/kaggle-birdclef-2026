@@ -15,7 +15,7 @@ project-owned, reproducible, and tied to a documented experiment.
 | `06_onnx_perch_speed_test.ipynb` | ONNX Perch runtime experiment |
 | `10_onnx_perch_sed_soundscape_calibrated.ipynb` | Protected soundscape-calibrated baseline submission |
 | `13_onnx_perch_sed_temporal_residual.ipynb` | Protected temporal residual blend submission |
-| `14_eos9_public_ensemble_taxonomy_smoothing.ipynb` | Final archived EoS.9 champion submission |
+| `14_final_public_ensemble_taxonomy_smoothing.ipynb` | Final archived public ensemble champion submission |
 
 ## Archived Experiments
 
@@ -36,7 +36,7 @@ The competition run is archived. The final lane is:
 
 | Notebook | Purpose |
 |---|---|
-| `14_eos9_public_ensemble_taxonomy_smoothing.ipynb` | Canonical v9 EoS.9 public ensemble adaptation with taxonomy smoothing, **0.950 public / 0.941 private** |
+| `14_final_public_ensemble_taxonomy_smoothing.ipynb` | Canonical version 9 final public ensemble adaptation with taxonomy smoothing, **0.950 public / 0.941 private** |
 
 Do not add separate notebooks for every public reference. Review external
 notebooks in `docs/`, then promote only the cleaned project-owned version.

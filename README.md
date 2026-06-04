@@ -22,19 +22,19 @@ full experiment path.
 
 | Result | Value |
 |---|---:|
-| Final champion | `14_eos9_public_ensemble_taxonomy_smoothing.ipynb` |
+| Final champion | `14_final_public_ensemble_taxonomy_smoothing.ipynb` |
 | Public leaderboard | **0.950** |
 | Private leaderboard | **0.941** |
 | Canonical blend weights | `[0.020, 0.013, 0.967]` |
 | Best project-owned ONNX blend | **0.898** public |
 | Strong simple ONNX baseline | **0.822** public |
 
-The final notebook adapts the reviewed EoS.9 public ensemble into the project
-style, keeps the three active inference routes, enables taxonomy smoothing, and
-validates the generated `submission.csv`. Four final weight probes tied the
+The final notebook adapts a reviewed public ensemble reference into the project
+style, keeps the three selected inference routes, enables taxonomy smoothing,
+and validates the generated `submission.csv`. Four final weight probes tied the
 canonical score, so the repository keeps version 9 as the reproducible champion.
 
-Final score details: [docs/14_eos9_final_results.md](docs/14_eos9_final_results.md).
+Final score details: [docs/14_final_public_ensemble_results.md](docs/14_final_public_ensemble_results.md).
 
 ## Competition Context
 
@@ -59,7 +59,7 @@ are central constraints.
 | ONNX Perch + SED proxy blend | `archive/09_onnx_perch_sed_blend_proxy6.ipynb` | **0.892** | Mapping milestone |
 | Soundscape-calibrated blend | `10_onnx_perch_sed_soundscape_calibrated.ipynb` | **0.893** | Protected baseline |
 | Temporal residual blend | `13_onnx_perch_sed_temporal_residual.ipynb` | **0.898** | Best project-owned ONNX blend |
-| EoS.9 public ensemble | `14_eos9_public_ensemble_taxonomy_smoothing.ipynb` | **0.950** | Final champion, **0.941** private |
+| Final public ensemble | `14_final_public_ensemble_taxonomy_smoothing.ipynb` | **0.950** | Final champion, **0.941** private |
 
 The main score jump came from moving from direct Perch and compact SED
 baselines to richer ensemble routes while preserving a notebook-first Kaggle
@@ -77,7 +77,7 @@ notebooks/
   06_onnx_perch_speed_test.ipynb
   10_onnx_perch_sed_soundscape_calibrated.ipynb
   13_onnx_perch_sed_temporal_residual.ipynb
-  14_eos9_public_ensemble_taxonomy_smoothing.ipynb
+  14_final_public_ensemble_taxonomy_smoothing.ipynb
   metadata/
   archive/
 
@@ -95,13 +95,13 @@ docs/
   11_onnx_perch_sed_blend_results.md
   12_perch_mapping_diagnostics.md
   13_soundscape_calibration_diagnostics.md
-  14_eos9_final_results.md
+  14_final_public_ensemble_results.md
 
 scripts/
-  check_notebook14_submission.sh
-  check_notebook14_weight_submissions.sh
-  watch_notebook14_submission.sh
-  watch_notebook14_weight_submissions.sh
+  check_final_ensemble_submission.sh
+  check_final_ensemble_weight_submissions.sh
+  watch_final_ensemble_submission.sh
+  watch_final_ensemble_weight_submissions.sh
 ```
 
 Generated submissions, Kaggle datasets, model weights, ONNX files, waveform
@@ -119,7 +119,7 @@ caches, and local artifacts stay outside git.
 | [06_onnx_perch_speed_test.ipynb](notebooks/06_onnx_perch_speed_test.ipynb) | ONNX Perch runtime experiment |
 | [10_onnx_perch_sed_soundscape_calibrated.ipynb](notebooks/10_onnx_perch_sed_soundscape_calibrated.ipynb) | Protected soundscape-calibrated ONNX blend |
 | [13_onnx_perch_sed_temporal_residual.ipynb](notebooks/13_onnx_perch_sed_temporal_residual.ipynb) | Best project-owned ONNX blend |
-| [14_eos9_public_ensemble_taxonomy_smoothing.ipynb](notebooks/14_eos9_public_ensemble_taxonomy_smoothing.ipynb) | Final archived EoS.9 champion |
+| [14_final_public_ensemble_taxonomy_smoothing.ipynb](notebooks/14_final_public_ensemble_taxonomy_smoothing.ipynb) | Final archived public ensemble champion |
 
 Historical experiments live under [notebooks/archive](notebooks/archive). See
 [notebooks/README.md](notebooks/README.md) for promotion and preservation
@@ -143,10 +143,11 @@ Full EDA notes: [docs/03_eda_insights.md](docs/03_eda_insights.md).
 ## Reproducibility Notes
 
 - Kaggle remains the execution environment for submission notebooks.
-- Notebook 14 metadata is tracked at
-  [notebooks/metadata/14_eos9_public_ensemble_taxonomy_smoothing/kernel-metadata.json](notebooks/metadata/14_eos9_public_ensemble_taxonomy_smoothing/kernel-metadata.json).
+- The final ensemble notebook metadata is tracked at
+  [notebooks/metadata/14_final_public_ensemble_taxonomy_smoothing/kernel-metadata.json](notebooks/metadata/14_final_public_ensemble_taxonomy_smoothing/kernel-metadata.json).
 - The final Kaggle kernel slug is
   `tuannm3812/birdclef-2026-eos9-public-ensemble-taxonomy`.
+  The slug keeps the original public-reference naming for reproducibility.
 - Direct CSV upload returned a Kaggle `400` response for this code competition;
   final submissions were made by pushing notebook versions and submitting the
   generated kernel output.
@@ -166,5 +167,5 @@ Full EDA notes: [docs/03_eda_insights.md](docs/03_eda_insights.md).
 | [ONNX Perch speed results](docs/10_onnx_perch_speed_results.md) | CPU runtime experiment |
 | [ONNX Perch + SED blend results](docs/11_onnx_perch_sed_blend_results.md) | Blend history and interpretation |
 | [Soundscape calibration diagnostics](docs/13_soundscape_calibration_diagnostics.md) | Calibration analysis |
-| [EoS.9 final results](docs/14_eos9_final_results.md) | Final public/private result record |
+| [Final public ensemble results](docs/14_final_public_ensemble_results.md) | Final public/private result record |
 | [Next steps](docs/06_next_steps.md) | Post-competition archive and research backlog |

@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CHECK_SCRIPT="${ROOT_DIR}/scripts/check_notebook14_weight_submissions.sh"
-WATCH_LOG="${ROOT_DIR}/local_artifacts/notebook14_weight_submission_watcher.log"
+CHECK_SCRIPT="${ROOT_DIR}/scripts/check_final_ensemble_weight_submissions.sh"
+WATCH_LOG="${ROOT_DIR}/local_artifacts/final_ensemble_weight_submission_watcher.log"
 
 mkdir -p "${ROOT_DIR}/local_artifacts"
 

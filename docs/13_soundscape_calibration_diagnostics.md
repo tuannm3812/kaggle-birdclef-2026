@@ -8,7 +8,7 @@
 
 This diagnostic is historical. The soundscape-calibrated blend was later
 superseded by the temporal residual blend at **0.898** public score and by the
-final EoS.9 notebook at **0.950 public / 0.941 private**.
+final public ensemble notebook at **0.950 public / 0.941 private**.
 
 | Metric | Value |
 |---|---:|

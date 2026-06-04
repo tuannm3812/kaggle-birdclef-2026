@@ -3,7 +3,7 @@
 ## 1. Summary
 
 This document records the ONNX Perch + SED submission path. It is superseded on
-the final leaderboard by `14_eos9_public_ensemble_taxonomy_smoothing.ipynb`,
+the final leaderboard by `14_final_public_ensemble_taxonomy_smoothing.ipynb`,
 which reached **0.950 public / 0.941 private**. The strongest project-owned
 ONNX blend remains `13_onnx_perch_sed_temporal_residual.ipynb` at **0.898**
 public score.
@@ -74,5 +74,5 @@ Post-competition research should stay small and controlled:
 2. Do not continue pruning calibration weights with hard support thresholds.
 3. If testing another calibration variant, prefer a smoother/shrunk version
    rather than dropping low-support changes entirely.
-4. Compare ONNX blend outputs against notebook 14 if the repo is revived for
+4. Compare ONNX blend outputs against the final ensemble notebook if the repo is revived for
    deeper model analysis.

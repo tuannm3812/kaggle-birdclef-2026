@@ -3,8 +3,9 @@
 ## 1. Summary
 
 This document records the distilled SED ONNX milestone. It was later
-superseded by ONNX Perch + SED blends and by the final EoS.9 notebook, but it
-remains the strongest simple non-blended baseline in this workspace.
+superseded by ONNX Perch + SED blends and by the final public ensemble
+notebook, but it remains the strongest simple non-blended baseline in this
+workspace.
 
 | Submission | Notebook | Public score | Status |
 |---|---|---:|---|
@@ -33,7 +34,7 @@ Important strengths:
 
 This became the protected baseline at the time and remains valuable as a source
 of modeling ideas. Later leaderboard work stayed in the ONNX lane before the
-final EoS.9 adaptation.
+final public ensemble adaptation.
 
 The score also suggests that full 234-column SED modeling plus temporal
 smoothing is more competition-aligned than a 206-class clean-clip Perch probe.
