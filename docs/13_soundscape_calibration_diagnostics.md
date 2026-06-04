@@ -3,7 +3,7 @@
 ## 1. Summary
 
 `soundscape_blend_calibration.csv` from
-`10_onnx_perch_sed_soundscape_calibrated.ipynb` explains the move from
+`04_soundscape_calibrated_blend.ipynb` explains the move from
 **0.892** to **0.893**.
 
 This diagnostic is historical. The soundscape-calibrated blend was later

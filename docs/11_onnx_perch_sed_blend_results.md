@@ -3,21 +3,21 @@
 ## 1. Summary
 
 This document records the ONNX Perch + SED submission path. It is superseded on
-the final leaderboard by `14_final_public_ensemble_taxonomy_smoothing.ipynb`,
+the final leaderboard by `06_final_public_ensemble_taxonomy_smoothing.ipynb`,
 which reached **0.950 public / 0.941 private**. The strongest project-owned
-ONNX blend remains `13_onnx_perch_sed_temporal_residual.ipynb` at **0.898**
+ONNX blend remains `05_temporal_residual_blend.ipynb` at **0.898**
 public score.
 
 | Submission | Notebook | Public score | Status |
 |---|---|---:|---|
-| ONNX Perch + SED temporal residual version 2 | `13_onnx_perch_sed_temporal_residual.ipynb` | **0.898** | Strongest project-owned ONNX blend |
-| ONNX Perch + SED soundscape-calibrated version 2 | `10_onnx_perch_sed_soundscape_calibrated.ipynb` | **0.893** | Protected baseline |
+| ONNX Perch + SED temporal residual version 2 | `05_temporal_residual_blend.ipynb` | **0.898** | Strongest project-owned ONNX blend |
+| ONNX Perch + SED soundscape-calibrated version 2 | `04_soundscape_calibrated_blend.ipynb` | **0.893** | Protected baseline |
 | ONNX Perch + SED min10/AP0.01 version 1 | `archive/11_onnx_perch_sed_calibrated_min10_ap001.ipynb` | **0.892** | Did not improve |
 | ONNX Perch + SED proxy6 version 1 | `archive/09_onnx_perch_sed_blend_proxy6.ipynb` | **0.892** | Protected baseline |
 | ONNX Perch + SED blend version 2 | `archive/07_onnx_perch_sed_blend.ipynb` | **0.890** | Protected baseline |
 | ONNX Perch + SED W0.25 version 2 | `archive/08_onnx_perch_sed_blend_w025.ipynb` | **0.890** | Tied champion |
-| ONNX distilled SED version 2 | `05_onnx_sed_submit.ipynb` | **0.822** | Protected baseline |
-| Perch v2 version 14 | `04_perch_v2_submit.ipynb` | **0.770** | Protected baseline |
+| ONNX distilled SED version 2 | `support/05_distilled_sed_submission_reference.ipynb` | **0.822** | Protected baseline |
+| Perch v2 version 14 | `support/04_perch_v2_submission_reference.ipynb` | **0.770** | Protected baseline |
 | EfficientNet-B0 version 9 | `02_effnet_b0.ipynb` | **0.646** | CPU-safe fallback |
 
 The temporal residual blend improved public score by **+0.076** over ONNX SED
@@ -37,9 +37,10 @@ The soundscape-calibrated variant improved public score from **0.892** to
 train-soundscape windows.
 
 The support-thresholded calibration variant dropped back to **0.892**. This
-suggests the low-support calibration changes in notebook `10` may contribute
-useful public-leaderboard signal, or at minimum should not be removed by a
-simple positives/AP threshold.
+suggests the low-support calibration changes in
+`04_soundscape_calibrated_blend.ipynb` may contribute useful
+public-leaderboard signal, or at minimum should not be removed by a simple
+positives/AP threshold.
 
 ## 2. What Worked
 
@@ -74,5 +75,5 @@ Post-competition research should stay small and controlled:
 2. Do not continue pruning calibration weights with hard support thresholds.
 3. If testing another calibration variant, prefer a smoother/shrunk version
    rather than dropping low-support changes entirely.
-4. Compare ONNX blend outputs against the final ensemble notebook if the repo is revived for
-   deeper model analysis.
+4. Compare ONNX blend outputs against the final ensemble notebook if the repo is
+   revived for deeper model analysis.

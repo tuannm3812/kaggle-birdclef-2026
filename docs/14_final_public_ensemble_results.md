@@ -2,7 +2,7 @@
 
 ## 1. Summary
 
-`14_final_public_ensemble_taxonomy_smoothing.ipynb` is the final archived
+`06_final_public_ensemble_taxonomy_smoothing.ipynb` is the final archived
 leaderboard champion for this workspace.
 
 | Metric | Score |
@@ -36,7 +36,7 @@ matches the documented reference weights.
 - Kaggle kernel slug:
   `tuannm3812/birdclef-2026-eos9-public-ensemble-taxonomy`.
 - Metadata file:
-  `notebooks/metadata/14_final_public_ensemble_taxonomy_smoothing/kernel-metadata.json`.
+  `notebooks/metadata/06_final_public_ensemble_taxonomy_smoothing/kernel-metadata.json`.
 - Output file: `submission.csv`.
 - Direct CSV upload returned a Kaggle `400` response for this code competition,
   so submissions were made by pushing notebook versions and submitting the

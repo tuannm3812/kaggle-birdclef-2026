@@ -2,7 +2,7 @@
 
 ## 1. Summary
 
-`06_onnx_perch_speed_test.ipynb` successfully loaded and ran the ONNX Perch
+`support/06_onnx_perch_runtime_probe.ipynb` successfully loaded and ran the ONNX Perch
 no-DFT model on Kaggle CPU.
 
 | Metric | Result |

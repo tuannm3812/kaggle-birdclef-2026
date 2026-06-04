@@ -26,7 +26,7 @@ The Perch workflow is now split into two notebooks. The training notebook uses c
 | Submission speedup | Prefers the CPU Perch export and batches full 60-second soundscape files into 12 windows per file |
 | CPU public score | **0.770** |
 | Training notebook | `notebooks/03_perch_v2_train.ipynb` |
-| Submission notebook | `notebooks/04_perch_v2_submit.ipynb` |
+| Submission notebook | `notebooks/support/04_perch_v2_submission_reference.ipynb` |
 
 ## 3. Validation History
 

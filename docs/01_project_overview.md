@@ -44,9 +44,9 @@ The competition reduces to five practical questions:
 | Explore the dataset | `01_eda.ipynb` | Audit labels, soundscape annotations, metadata shift, and acoustic examples |
 | Build a simple baseline | `02_effnet_b0.ipynb` | Train and score a 5-second mel-spectrogram EfficientNet-B0 model |
 | Build the Perch baseline | `03_perch_v2_train.ipynb` | Train a shallow classifier on frozen Google Perch v2 embeddings and package artifacts |
-| Submit the Perch baseline | `04_perch_v2_submit.ipynb` | Load Perch artifacts, run CPU soundscape scoring, and write `submission.csv` |
-| Score ONNX blend baselines | `05`, `10`, `13` notebooks | Preserve fast SED, Perch + SED, and temporal residual submission paths |
-| Archive final champion | `14_final_public_ensemble_taxonomy_smoothing.ipynb` | Preserve the final public ensemble adaptation |
+| Submit the Perch baseline | `support/04_perch_v2_submission_reference.ipynb` | Load Perch artifacts, run CPU soundscape scoring, and write `submission.csv` |
+| Score ONNX blend baselines | `04_soundscape_calibrated_blend.ipynb`, `05_temporal_residual_blend.ipynb` | Preserve fast SED, Perch + SED, and temporal residual submission paths |
+| Archive final champion | `06_final_public_ensemble_taxonomy_smoothing.ipynb` | Preserve the final public ensemble adaptation |
 
 The notebooks are intentionally ordered from understanding to baseline to
 stronger transfer models and final submission archive. EDA explains why
@@ -94,10 +94,10 @@ The result shows that foundation bioacoustic features transfer better than the s
 ### 4.4 Final Champion
 
 The final archived champion is
-`14_final_public_ensemble_taxonomy_smoothing.ipynb`, an adapted public ensemble
+`06_final_public_ensemble_taxonomy_smoothing.ipynb`, an adapted public ensemble
 with taxonomy smoothing. It reached **0.950 public / 0.941 private**.
 The strongest fully project-owned ONNX blend remains
-`13_onnx_perch_sed_temporal_residual.ipynb` at **0.898** public score.
+`05_temporal_residual_blend.ipynb` at **0.898** public score.
 
 ## 5. Post-Competition Questions
 

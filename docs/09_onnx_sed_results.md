@@ -9,8 +9,8 @@ workspace.
 
 | Submission | Notebook | Public score | Status |
 |---|---|---:|---|
-| ONNX distilled SED version 1 | `05_onnx_sed_submit.ipynb` | **0.822** | Protected baseline |
-| Perch v2 version 14 | `04_perch_v2_submit.ipynb` | **0.770** | Protected baseline |
+| ONNX distilled SED version 1 | `support/05_distilled_sed_submission_reference.ipynb` | **0.822** | Protected baseline |
+| Perch v2 version 14 | `support/04_perch_v2_submission_reference.ipynb` | **0.770** | Protected baseline |
 | EfficientNet-B0 version 9 | `02_effnet_b0.ipynb` | **0.646** | CPU-safe fallback |
 
 The ONNX SED path improves public score by **+0.052** over the previous Perch
@@ -41,7 +41,7 @@ smoothing is more competition-aligned than a 206-class clean-clip Perch probe.
 
 ## 4. Recommended Next Step
 
-Create `06_onnx_perch_speed_test.ipynb` as a runtime experiment, not a full
+Create `support/06_onnx_perch_runtime_probe.ipynb` as a runtime experiment, not a full
 modeling notebook.
 
 The next notebook should:

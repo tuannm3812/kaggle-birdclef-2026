@@ -1,7 +1,7 @@
 {
   "id": "tuannm3812/birdclef-2026-eos9-public-ensemble-taxonomy",
   "title": "BirdCLEF+ 2026 Final Public Ensemble Taxonomy",
-  "code_file": "../../14_final_public_ensemble_taxonomy_smoothing.ipynb",
+  "code_file": "../../06_final_public_ensemble_taxonomy_smoothing.ipynb",
   "language": "python",
   "kernel_type": "notebook",
   "is_private": true,

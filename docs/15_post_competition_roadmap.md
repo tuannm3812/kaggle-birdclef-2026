@@ -7,11 +7,11 @@ leaderboard champion:
 
 | Submission path | Public | Private | Role |
 |---|---:|---:|---|
-| `14_final_public_ensemble_taxonomy_smoothing.ipynb` | **0.950** | **0.941** | Final champion |
-| `13_onnx_perch_sed_temporal_residual.ipynb` | **0.898** | N/A | Strongest project-owned ONNX blend |
-| `10_onnx_perch_sed_soundscape_calibrated.ipynb` | **0.893** | N/A | Protected soundscape-calibrated baseline |
-| `05_onnx_sed_submit.ipynb` | **0.822** | N/A | Strong fast SED baseline |
-| `04_perch_v2_submit.ipynb` | **0.770** | N/A | Perch v2 reference |
+| `06_final_public_ensemble_taxonomy_smoothing.ipynb` | **0.950** | **0.941** | Final champion |
+| `05_temporal_residual_blend.ipynb` | **0.898** | N/A | Strongest project-owned ONNX blend |
+| `04_soundscape_calibrated_blend.ipynb` | **0.893** | N/A | Protected soundscape-calibrated baseline |
+| `support/05_distilled_sed_submission_reference.ipynb` | **0.822** | N/A | Strong fast SED baseline |
+| `support/04_perch_v2_submission_reference.ipynb` | **0.770** | N/A | Perch v2 reference |
 | `02_effnet_b0.ipynb` | **0.646** | N/A | CPU-safe fallback |
 
 The final ensemble notebook should stay on the canonical version 9 weights
@@ -28,10 +28,10 @@ Status: complete.
 
 Work items:
 
-1. Keep `14_final_public_ensemble_taxonomy_smoothing.ipynb` as the canonical
+1. Keep `06_final_public_ensemble_taxonomy_smoothing.ipynb` as the canonical
    final notebook.
 2. Keep
-   `notebooks/metadata/14_final_public_ensemble_taxonomy_smoothing/kernel-metadata.json`
+   `notebooks/metadata/06_final_public_ensemble_taxonomy_smoothing/kernel-metadata.json`
    with the Kaggle kernel slug and attached inputs.
 3. Keep `docs/14_final_public_ensemble_results.md` as the final score source of truth.
 4. Treat the version 10 through 13 weight probes as recorded result variants,
@@ -43,11 +43,11 @@ Status: complete.
 
 Work items:
 
-1. Keep `02_effnet_b0.ipynb` and `04_perch_v2_submit.ipynb` as the original
+1. Keep `02_effnet_b0.ipynb` and `support/04_perch_v2_submission_reference.ipynb` as the original
    reproducible baseline submissions.
-2. Keep `05_onnx_sed_submit.ipynb` as the strong non-blended ONNX path.
-3. Keep `10_onnx_perch_sed_soundscape_calibrated.ipynb` and
-   `13_onnx_perch_sed_temporal_residual.ipynb` as the strongest project-owned
+2. Keep `support/05_distilled_sed_submission_reference.ipynb` as the strong non-blended ONNX path.
+3. Keep `04_soundscape_calibrated_blend.ipynb` and
+   `05_temporal_residual_blend.ipynb` as the strongest project-owned
    blend paths.
 4. Keep archived variants under `notebooks/archive/` for reproducibility, but
    do not continue editing them during cleanup.

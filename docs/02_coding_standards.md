@@ -16,26 +16,30 @@ Avoid adding local-only folders such as `data/`, `models/`, `outputs/`, or
 
 ## 2. Notebook Naming
 
-Use numbered, stable notebook names. Keep active notebooks at the top level and
+Use numbered, stable notebook names. Keep only narrative notebooks at the top
+level. Move pure submission/runtime references to `notebooks/support/`, and
 move older config-only variants to `notebooks/archive/` once they are no longer
 the maintained reference.
 
 1. `01_eda.ipynb`
 2. `02_effnet_b0.ipynb`
 3. `03_perch_v2_train.ipynb`
-4. `04_perch_v2_submit.ipynb`
-5. `05_onnx_sed_submit.ipynb`
-6. `06_onnx_perch_speed_test.ipynb`
+4. `support/04_perch_v2_submission_reference.ipynb`
+5. `support/05_distilled_sed_submission_reference.ipynb`
+6. `support/06_onnx_perch_runtime_probe.ipynb`
 7. `archive/07_onnx_perch_sed_blend.ipynb`
 8. `archive/08_onnx_perch_sed_blend_w025.ipynb`
 9. `archive/09_onnx_perch_sed_blend_proxy6.ipynb`
-10. `10_onnx_perch_sed_soundscape_calibrated.ipynb`
+10. `04_soundscape_calibrated_blend.ipynb`
 11. `archive/11_onnx_perch_sed_calibrated_min10_ap001.ipynb`
 12. `archive/12_onnx_perch_sed_calibrated_shrink050.ipynb`
-13. `13_onnx_perch_sed_temporal_residual.ipynb`
-14. `14_final_public_ensemble_taxonomy_smoothing.ipynb`
+13. `05_temporal_residual_blend.ipynb`
+14. `06_final_public_ensemble_taxonomy_smoothing.ipynb`
 
-Notebook names should describe the actual Kaggle workflow. Keep training and submission together for simple baselines, but split them when artifact management, runtime constraints, or Kaggle scoring safety make the responsibilities meaningfully different.
+Notebook names should describe the actual Kaggle workflow. Keep training and
+submission together for simple baselines, but split them when artifact
+management, runtime constraints, or Kaggle scoring safety make the
+responsibilities meaningfully different.
 
 Reserve new numbers for promoted project-owned workflows only. Create the next
 notebook only after the current maintained workflow has produced a clear
