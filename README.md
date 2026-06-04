@@ -14,8 +14,8 @@
 
 BirdCLEF+ 2026 bioacoustic classification workspace for Brazilian Pantanal
 soundscapes. The repository highlights the decisions that mattered most:
-soundscape-domain validation, full 234-column output coverage, CPU-safe
-inference, Perch/SED signal blending, and final ensemble diversity.
+**soundscape-domain validation**, full **234-column output coverage**,
+**CPU-safe inference**, Perch/SED signal blending, and final ensemble diversity.
 
 ## Final Result
 
@@ -49,26 +49,26 @@ are central constraints.
 
 ## Key Insights
 
-- Hidden scoring is closer to long soundscape detection than clean-clip
+- **Hidden scoring** is closer to long soundscape detection than clean-clip
   classification, so soundscape-domain validation became the most useful
   feedback loop.
 - The training set has **35,549** recordings across **206** primary labels, but
   the submission contract requires **234** target probability columns. Closing
-  that coverage gap was more important than optimizing a narrow train-label
+  the **coverage gap** was more important than optimizing a narrow train-label
   model.
 - Labeled train soundscapes deduplicate from **1,478** rows to **739** unique
   5-second windows. That small set is limited, but it exposes the domain shift
   that clean-clip validation misses.
-- Class imbalance is severe: median class size is **125**, with a range of
+- **Class imbalance** is severe: median class size is **125**, with a range of
   **1-499** recordings. Calibration and blending were more reliable than
   treating all labels as equally observed.
-- Inference runtime is part of model quality on Kaggle. A strong model that
+- **Inference runtime** is part of model quality on Kaggle. A strong model that
   cannot score hidden soundscapes inside the limit is not a usable submission.
 - Perch was most useful as a feature source, teacher, or blended ONNX signal,
   not as a direct TensorFlow submission path.
 - Small calibration and proxy-mapping changes helped, but their ceiling was
-  limited. The largest final gain came from model diversity plus taxonomy-aware
-  smoothing.
+  limited. The largest final gain came from **model diversity** plus
+  taxonomy-aware smoothing.
 
 Full EDA notes: [docs/03_eda_insights.md](docs/03_eda_insights.md).
 
