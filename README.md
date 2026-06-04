@@ -8,14 +8,14 @@
   <a href="https://www.kaggle.com/competitions/birdclef-2026">
     <img src="https://img.shields.io/badge/Kaggle-BirdCLEF%2B%202026-20BEFF?logo=kaggle&logoColor=white" alt="Kaggle competition">
   </a>
-  <img src="https://img.shields.io/badge/Workflow-Notebook--first-F37626?logo=jupyter" alt="Notebook-first workflow">
+  <img src="https://img.shields.io/badge/Focus-Soundscape%20shift%20%7C%20Ensemble%20diversity-2EA44F" alt="Project focus">
   <img src="https://img.shields.io/badge/Final-Public%200.950%20%7C%20Private%200.941-2EA44F" alt="Final score">
 </p>
 
 BirdCLEF+ 2026 bioacoustic classification workspace for Brazilian Pantanal
-soundscapes. The repository records the modeling path from dataset audit to a
-final public ensemble submission, with the reasoning, experiments, and
-key notebooks kept in a notebook-first workflow.
+soundscapes. The repository highlights the decisions that mattered most:
+soundscape-domain validation, full 234-column output coverage, CPU-safe
+inference, Perch/SED signal blending, and final ensemble diversity.
 
 ## Final Result
 
@@ -35,7 +35,7 @@ canonical score, so the repository keeps version 9 as the reproducible champion.
 
 Final score details: [docs/14_final_public_ensemble_results.md](docs/14_final_public_ensemble_results.md).
 
-## Competition Context
+## Problem Framing
 
 BirdCLEF+ 2026 asks participants to identify wildlife species in hidden
 1-minute Pantanal soundscape recordings. Each soundscape is scored as **12
@@ -47,7 +47,32 @@ The target set includes birds, amphibians, mammals, reptiles, and insects, so
 calibration, domain shift, class imbalance, and CPU-safe hidden-test inference
 are central constraints.
 
-## Solution Logic
+## Key Insights
+
+- Hidden scoring is closer to long soundscape detection than clean-clip
+  classification, so soundscape-domain validation became the most useful
+  feedback loop.
+- The training set has **35,549** recordings across **206** primary labels, but
+  the submission contract requires **234** target probability columns. Closing
+  that coverage gap was more important than optimizing a narrow train-label
+  model.
+- Labeled train soundscapes deduplicate from **1,478** rows to **739** unique
+  5-second windows. That small set is limited, but it exposes the domain shift
+  that clean-clip validation misses.
+- Class imbalance is severe: median class size is **125**, with a range of
+  **1-499** recordings. Calibration and blending were more reliable than
+  treating all labels as equally observed.
+- Inference runtime is part of model quality on Kaggle. A strong model that
+  cannot score hidden soundscapes inside the limit is not a usable submission.
+- Perch was most useful as a feature source, teacher, or blended ONNX signal,
+  not as a direct TensorFlow submission path.
+- Small calibration and proxy-mapping changes helped, but their ceiling was
+  limited. The largest final gain came from model diversity plus taxonomy-aware
+  smoothing.
+
+Full EDA notes: [docs/03_eda_insights.md](docs/03_eda_insights.md).
+
+## Modeling Logic
 
 The project started with EDA because the scoring setup is not a clean-clip
 classification problem. Hidden scoring uses long soundscapes, overlapping
@@ -71,7 +96,7 @@ stronger public inference routes with taxonomy smoothing, while keeping the
 project's submission validation and result tracking style. The final archived
 configuration reached **0.950 public / 0.941 private**.
 
-## Project Progression
+## Score Progression
 
 | Stage | Evidence | Public score | Role |
 |---|---|---:|---|
@@ -85,24 +110,8 @@ configuration reached **0.950 public / 0.941 private**.
 | Final public ensemble | `06_final_public_ensemble_taxonomy_smoothing.ipynb` | **0.950** | Final champion, **0.941** private |
 
 The main score jump came from moving from direct Perch and compact SED
-baselines to richer ensemble routes while preserving a notebook-first Kaggle
-submission workflow.
-
-## Lessons Learned
-
-- Soundscape labels are more valuable than clean-clip validation alone because
-  they match the hidden scoring domain more closely.
-- Full output coverage matters. Moving from 206 train-primary classes to the
-  full 234-column submission contract was a major alignment step.
-- Inference runtime is part of model quality on Kaggle. A strong model that
-  cannot score hidden soundscapes inside the limit is not a usable submission.
-- Perch was most useful as a feature source, teacher, or blended ONNX signal,
-  not as a direct TensorFlow submission path.
-- Small calibration and proxy-mapping changes helped, but their ceiling was
-  limited. The largest final gain came from model diversity plus taxonomy-aware
-  smoothing.
-- Public dry runs are incomplete runtime tests because hidden `test_soundscapes/`
-  are only mounted during scoring.
+baselines to richer ensemble routes while preserving Kaggle-safe inference and
+submission validation.
 
 ## Key Notebooks
 
@@ -118,29 +127,3 @@ submission workflow.
 Pure submission references and runtime probes live under `notebooks/support/`.
 Historical variants live under [notebooks/archive](notebooks/archive). See
 [notebooks/README.md](notebooks/README.md) for promotion and preservation rules.
-
-## Notebook Run State
-
-| Notebook | Local output state | Evidence retained |
-|---|---|---|
-| `01_eda.ipynb` | Outputs cleared | EDA figures and findings in `docs/03_eda_insights.md` |
-| `02_effnet_b0.ipynb` | Outputs cleared | Public score recorded in `docs/04_effnet_b0_results.md` |
-| `03_perch_v2_train.ipynb` | Outputs cleared | Public score and artifact notes in `docs/05_perch_v2_results.md` |
-| `04_soundscape_calibrated_blend.ipynb` | Kaggle outputs retained | Public score recorded in blend diagnostics |
-| `05_temporal_residual_blend.ipynb` | Kaggle outputs retained | Public score recorded in blend diagnostics |
-| `06_final_public_ensemble_taxonomy_smoothing.ipynb` | Outputs cleared | Final public/private score and Kaggle metadata retained |
-
-## Key Findings
-
-- Training data contains **35,549** recordings across **206** primary labels.
-- The submission contract requires **234** target probability columns.
-- Labeled train soundscapes deduplicate from **1,478** rows to **739** unique
-  5-second windows.
-- The task has severe class imbalance: median class size is **125**, with a
-  range of **1-499** recordings.
-- Foundation bioacoustic features and public ensemble diversity transferred far
-  better than a small CNN trained from scratch.
-- Public notebook dry runs are not reliable hidden-test runtime checks because
-  hidden `test_soundscapes/` are only mounted during scoring.
-
-Full EDA notes: [docs/03_eda_insights.md](docs/03_eda_insights.md).
