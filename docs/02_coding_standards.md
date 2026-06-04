@@ -8,15 +8,17 @@ Keep the root small:
 
 - `notebooks/` for Kaggle notebooks.
 - `docs/` for reports, results, and supporting EDA artifacts.
+- `scripts/` for small Kaggle CLI status helpers only.
 - `README.md` for the high-level project overview.
 
-Avoid adding local-only folders such as `data/`, `models/`, `outputs/`, `configs/`, or `scripts/` unless the project direction changes back to local training.
+Avoid adding local-only folders such as `data/`, `models/`, `outputs/`, or
+`configs/` unless the project direction changes back to local training.
 
 ## 2. Notebook Naming
 
 Use numbered, stable notebook names. Keep active notebooks at the top level and
 move older config-only variants to `notebooks/archive/` once they are no longer
-the active lane.
+the maintained reference.
 
 1. `01_eda.ipynb`
 2. `02_effnet_b0.ipynb`
@@ -31,11 +33,13 @@ the active lane.
 11. `archive/11_onnx_perch_sed_calibrated_min10_ap001.ipynb`
 12. `archive/12_onnx_perch_sed_calibrated_shrink050.ipynb`
 13. `13_onnx_perch_sed_temporal_residual.ipynb`
+14. `14_final_public_ensemble_taxonomy_smoothing.ipynb`
 
 Notebook names should describe the actual Kaggle workflow. Keep training and submission together for simple baselines, but split them when artifact management, runtime constraints, or Kaggle scoring safety make the responsibilities meaningfully different.
 
 Reserve new numbers for promoted project-owned workflows only. Create the next
-notebook only after the current active workflow has produced a clear result.
+notebook only after the current maintained workflow has produced a clear
+result.
 
 Use numbered documentation filenames so the reading order is obvious:
 
@@ -44,7 +48,15 @@ Use numbered documentation filenames so the reading order is obvious:
 3. `03_eda_insights.md`
 4. `04_effnet_b0_results.md`
 5. `05_perch_v2_results.md`
-6. `06_next_steps.md`
+6. `07_distilled_sed_review.md`
+7. `08_protossm_review.md`
+8. `09_onnx_sed_results.md`
+9. `10_onnx_perch_speed_results.md`
+10. `11_onnx_perch_sed_blend_results.md`
+11. `12_perch_mapping_diagnostics.md`
+12. `13_soundscape_calibration_diagnostics.md`
+13. `14_final_public_ensemble_results.md`
+14. `15_post_competition_roadmap.md`
 
 ## 3. Code Style
 

@@ -103,7 +103,7 @@ The strongest fully project-owned ONNX blend remains
 
 The remaining experiments are research and reproducibility work rather than
 leaderboard pushes. The working roadmap lives in
-[06_next_steps.md](06_next_steps.md).
+[15_post_competition_roadmap.md](15_post_competition_roadmap.md).
 
 1. **Can Perch predictions improve with soundscape priors?**
    Test hour, site, and co-occurrence logit offsets from labeled soundscape windows.

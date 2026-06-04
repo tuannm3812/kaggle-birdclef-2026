@@ -13,10 +13,9 @@
 </p>
 
 BirdCLEF+ 2026 bioacoustic classification workspace for Brazilian Pantanal
-soundscapes. The repository is now a post-competition research archive: it
-preserves the final leaderboard notebook, the project-owned baseline notebooks,
-Kaggle metadata, operational scripts, and result notes needed to understand the
-full experiment path.
+soundscapes. The repository records the modeling path from dataset audit to a
+final public ensemble submission, with the reasoning, experiments, and
+submission notebooks kept in a notebook-first workflow.
 
 ## Final Result
 
@@ -48,6 +47,30 @@ The target set includes birds, amphibians, mammals, reptiles, and insects, so
 calibration, domain shift, class imbalance, and CPU-safe hidden-test inference
 are central constraints.
 
+## Solution Logic
+
+The project started with EDA because the scoring setup is not a clean-clip
+classification problem. Hidden scoring uses long soundscapes, overlapping
+species, sparse calls, and 234 output columns, while the main training set is
+mostly focal recordings with 206 primary labels.
+
+The first modeling goal was therefore reliability, not leaderboard score.
+EfficientNet-B0 established a simple PyTorch baseline and confirmed the
+submission contract. Perch v2 then improved representation quality through
+pretrained bioacoustic embeddings, but direct TensorFlow Perch inference was a
+runtime risk for hidden Kaggle scoring.
+
+The next phase moved the submission path to ONNX. Distilled SED handled all
+234 target columns with CPU-safe inference. ONNX Perch then became a lightweight
+additional signal rather than the full submitted model. Exact label mapping,
+targeted proxy mapping, and soundscape-calibrated blend weights each added
+small controlled gains.
+
+The final jump came from model diversity. The final public ensemble combined
+stronger public inference routes with taxonomy smoothing, while keeping the
+project's submission validation and result tracking style. The final archived
+configuration reached **0.950 public / 0.941 private**.
+
 ## Project Progression
 
 | Stage | Notebook | Public score | Role |
@@ -65,47 +88,21 @@ The main score jump came from moving from direct Perch and compact SED
 baselines to richer ensemble routes while preserving a notebook-first Kaggle
 submission workflow.
 
-## Repository Layout
+## Lessons Learned
 
-```text
-notebooks/
-  01_eda.ipynb
-  02_effnet_b0.ipynb
-  03_perch_v2_train.ipynb
-  04_perch_v2_submit.ipynb
-  05_onnx_sed_submit.ipynb
-  06_onnx_perch_speed_test.ipynb
-  10_onnx_perch_sed_soundscape_calibrated.ipynb
-  13_onnx_perch_sed_temporal_residual.ipynb
-  14_final_public_ensemble_taxonomy_smoothing.ipynb
-  metadata/
-  archive/
-
-docs/
-  01_project_overview.md
-  02_coding_standards.md
-  03_eda_insights.md
-  04_effnet_b0_results.md
-  05_perch_v2_results.md
-  06_next_steps.md
-  07_distilled_sed_review.md
-  08_protossm_review.md
-  09_onnx_sed_results.md
-  10_onnx_perch_speed_results.md
-  11_onnx_perch_sed_blend_results.md
-  12_perch_mapping_diagnostics.md
-  13_soundscape_calibration_diagnostics.md
-  14_final_public_ensemble_results.md
-
-scripts/
-  check_final_ensemble_submission.sh
-  check_final_ensemble_weight_submissions.sh
-  watch_final_ensemble_submission.sh
-  watch_final_ensemble_weight_submissions.sh
-```
-
-Generated submissions, Kaggle datasets, model weights, ONNX files, waveform
-caches, and local artifacts stay outside git.
+- Soundscape labels are more valuable than clean-clip validation alone because
+  they match the hidden scoring domain more closely.
+- Full output coverage matters. Moving from 206 train-primary classes to the
+  full 234-column submission contract was a major alignment step.
+- Inference runtime is part of model quality on Kaggle. A strong model that
+  cannot score hidden soundscapes inside the limit is not a usable submission.
+- Perch was most useful as a feature source, teacher, or blended ONNX signal,
+  not as a direct TensorFlow submission path.
+- Small calibration and proxy-mapping changes helped, but their ceiling was
+  limited. The largest final gain came from model diversity plus taxonomy-aware
+  smoothing.
+- Public dry runs are incomplete runtime tests because hidden `test_soundscapes/`
+  are only mounted during scoring.
 
 ## Maintained Notebooks
 
@@ -139,33 +136,3 @@ rules.
   hidden `test_soundscapes/` are only mounted during scoring.
 
 Full EDA notes: [docs/03_eda_insights.md](docs/03_eda_insights.md).
-
-## Reproducibility Notes
-
-- Kaggle remains the execution environment for submission notebooks.
-- The final ensemble notebook metadata is tracked at
-  [notebooks/metadata/14_final_public_ensemble_taxonomy_smoothing/kernel-metadata.json](notebooks/metadata/14_final_public_ensemble_taxonomy_smoothing/kernel-metadata.json).
-- The final Kaggle kernel slug is
-  `tuannm3812/birdclef-2026-eos9-public-ensemble-taxonomy`.
-  The slug keeps the original public-reference naming for reproducibility.
-- Direct CSV upload returned a Kaggle `400` response for this code competition;
-  final submissions were made by pushing notebook versions and submitting the
-  generated kernel output.
-- The scripts in `scripts/` are lightweight Kaggle status helpers. They expect
-  the Kaggle CLI and allow `KAGGLE_CLI` / `KAGGLE_CONFIG_DIR` overrides.
-
-## Documentation Index
-
-| Document | Purpose |
-|---|---|
-| [Project overview](docs/01_project_overview.md) | Competition framing and solution architecture |
-| [Coding standards](docs/02_coding_standards.md) | Notebook and code conventions |
-| [EDA insights](docs/03_eda_insights.md) | Dataset and soundscape findings |
-| [EfficientNet-B0 results](docs/04_effnet_b0_results.md) | PyTorch baseline notes |
-| [Perch v2 results](docs/05_perch_v2_results.md) | Perch probe results and diagnostics |
-| [ONNX SED results](docs/09_onnx_sed_results.md) | Distilled SED milestone |
-| [ONNX Perch speed results](docs/10_onnx_perch_speed_results.md) | CPU runtime experiment |
-| [ONNX Perch + SED blend results](docs/11_onnx_perch_sed_blend_results.md) | Blend history and interpretation |
-| [Soundscape calibration diagnostics](docs/13_soundscape_calibration_diagnostics.md) | Calibration analysis |
-| [Final public ensemble results](docs/14_final_public_ensemble_results.md) | Final public/private result record |
-| [Next steps](docs/06_next_steps.md) | Post-competition archive and research backlog |

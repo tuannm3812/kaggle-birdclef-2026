@@ -3,7 +3,7 @@
 Keep this folder small. Notebooks should be promoted here only when they are
 project-owned, reproducible, and tied to a documented experiment.
 
-## Active Notebooks
+## Maintained Notebooks
 
 | Notebook | Role |
 |---|---|
@@ -19,8 +19,8 @@ project-owned, reproducible, and tied to a documented experiment.
 
 ## Archived Experiments
 
-These are preserved for reproducibility, but should not be edited during the
-final submission push.
+These are preserved for reproducibility, but should not be edited unless a
+historical result needs to be audited.
 
 | Notebook | Role |
 |---|---|
@@ -54,5 +54,5 @@ leaderboard work should use notebook-first ONNX or ensemble notebooks.
 2. A submission notebook must avoid training and heavy diagnostics.
 3. Public-reference notebooks stay in `docs/*_review.md`, not in this folder.
 4. Protected baselines should not be overwritten by experiments.
-5. New experiments should update `docs/06_next_steps.md` before another notebook
-   is added.
+5. New experiments should update `docs/15_post_competition_roadmap.md` before
+   another notebook is added.
