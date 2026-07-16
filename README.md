@@ -12,10 +12,39 @@
   <img src="https://img.shields.io/badge/Final-Public%200.950%20%7C%20Private%200.941-2EA44F" alt="Final score">
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white" alt="PyTorch">
+  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?logo=tensorflow&logoColor=white" alt="TensorFlow">
+  <img src="https://img.shields.io/badge/ONNX%20Runtime-CPU%20inference-005CED" alt="ONNX Runtime">
+  <img src="https://img.shields.io/badge/Bioacoustics-Perch%20v2%20%7C%20SED-6f42c1" alt="Bioacoustics">
+  <img src="https://img.shields.io/badge/Notebooks-Kaggle--first-20BEFF?logo=jupyter&logoColor=white" alt="Notebook workflow">
+</p>
+
 BirdCLEF+ 2026 bioacoustic classification workspace for Brazilian Pantanal
 soundscapes. The repository highlights the decisions that mattered most:
 **soundscape-domain validation**, full **234-column output coverage**,
 **CPU-safe inference**, Perch/SED signal blending, and final ensemble diversity.
+
+## Highlights
+
+- **Top-tier result**: `0.950` public / `0.941` private leaderboard score,
+  driven by a validated, reproducible ensemble — not a single lucky submission.
+- **Went from a 206-label training set to a 234-column submission contract**
+  by treating coverage and calibration as first-class problems, not an
+  afterthought.
+- **Shipped under real constraints**: every submission path runs CPU-only
+  inside Kaggle's scoring window, with no internet access and no runtime
+  downloads — a production-inference discipline, not just a notebook that
+  scores well once.
+- **Model diversity over single-model tuning**: combined a distilled SED
+  model with an ONNX-exported Perch v2 signal and taxonomy-aware smoothing,
+  which produced a larger jump (`0.898 -> 0.950`) than any single calibration
+  tweak.
+- **Engineered for reproducibility**: every result is traceable to a notebook,
+  a Kaggle kernel slug, and a written results doc (see [docs/](docs/)),
+  backed by a static verification script
+  ([scripts/verify_notebook_standards.py](scripts/verify_notebook_standards.py))
+  that checks notebook hygiene before commits.
 
 ## Final Result
 
@@ -72,6 +101,29 @@ are central constraints.
 
 Full EDA notes: [docs/03_eda_insights.md](docs/03_eda_insights.md).
 
+## Engineering Highlights
+
+Skills and practices this project put into practice, beyond model accuracy:
+
+- **Transfer learning & distillation**: adapted pretrained Perch v2 bioacoustic
+  embeddings and distilled a compact SED model for fast, CPU-safe inference.
+- **Model export & runtime optimization**: converted TensorFlow/PyTorch models
+  to ONNX to meet Kaggle's CPU-only scoring limit, after confirming direct
+  TensorFlow Perch inference was a runtime risk.
+- **Calibration & ensembling**: soundscape-domain calibration, proxy-label
+  mapping, and weighted ensemble blending, each validated against held-out
+  soundscape windows rather than clean-clip accuracy.
+- **Domain-shift-aware validation**: identified that hidden scoring behaves
+  like long-soundscape detection, not clean-clip classification, and built a
+  soundscape-specific validation loop instead of trusting train-set metrics.
+- **Reproducible experiment tracking**: every promoted notebook is paired with
+  a Kaggle kernel-metadata file and a written results doc, so any leaderboard
+  number can be traced back to its exact notebook version and inputs.
+- **Codebase hygiene at scale**: enforced notebook naming, output-clearing,
+  and submission-validation conventions (see
+  [docs/02_coding_standards.md](docs/02_coding_standards.md)) with a static
+  checker script, so the notebook-first workflow stays auditable.
+
 ## Modeling Logic
 
 The project started with EDA because the scoring setup is not a clean-clip
@@ -127,3 +179,24 @@ submission validation.
 Pure submission references and runtime probes live under `notebooks/support/`.
 Historical variants live under [notebooks/archive](notebooks/archive). See
 [notebooks/README.md](notebooks/README.md) for promotion and preservation rules.
+
+## Repository Structure
+
+```
+kaggle-birdclef-2026/
+├── notebooks/          # Kaggle notebooks — the executable source of truth
+│   ├── support/        # Submission references and runtime probes
+│   ├── archive/        # Historical score variants, preserved not edited
+│   └── metadata/       # Kaggle kernel metadata per promoted notebook
+├── docs/               # Numbered reports: EDA, model results, coding
+│                       #   standards, calibration diagnostics, roadmap
+├── scripts/            # Kaggle status helpers + notebook standards checker
+└── README.md           # This file
+```
+
+This repository is intentionally **notebook-first**: Kaggle notebooks are the
+executable source of truth, and `docs/` captures the analysis and decisions
+behind each result. See
+[docs/02_coding_standards.md](docs/02_coding_standards.md) for the full
+convention set and [docs/15_post_competition_roadmap.md](docs/15_post_competition_roadmap.md)
+for the project's current (archived) status.
