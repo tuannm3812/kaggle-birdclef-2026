@@ -75,13 +75,20 @@ as pending leaderboard work:
 1. Build a run registry from notebook metadata, public/private scores, artifact
    inputs, and output paths.
 2. Convert reusable feature extraction and submission validation code into
-   small modules if another BirdCLEF season starts.
+   small modules if another BirdCLEF season starts. Stays gated on a new
+   season starting: keeping notebooks self-contained is a deliberate choice
+   (Section 4 of `docs/02_coding_standards.md`), not an oversight, so this
+   should not be scoped as near-term work while the repo is archived.
 3. Compare the final ensemble route outputs against the project-owned ONNX
    blends to identify which taxa drove the `0.898 -> 0.950` jump.
 4. Revisit Perch soundscape priors, weak-label diagnostics, and distillation
    only if there is a fresh validation target or a new competition split.
-5. Add a lightweight CI check that validates notebook JSON and scans submission
-   notebooks for missing `submission.csv` validation.
+5. ~~Add a lightweight CI check that validates notebook JSON and scans
+   submission notebooks for missing `submission.csv` validation.~~ Done:
+   `scripts/verify_notebook_standards.py`, documented in Section 7 of
+   `docs/02_coding_standards.md`. Static/offline only, run manually before
+   committing notebook changes — no GitHub Actions workflow, matching the
+   "keep operational helpers small" guardrail below.
 
 ## 4. Guardrails
 

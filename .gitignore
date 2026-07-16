@@ -13,10 +13,12 @@ env/
 *.pth
 *.ckpt
 *.onnx
+*.h5
 *.npy
 *.npz
 *.parquet
 *.zip
+*.wav
 
 .env
 kaggle.json

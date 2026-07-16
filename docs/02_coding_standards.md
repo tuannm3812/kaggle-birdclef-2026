@@ -135,7 +135,27 @@ Documentation should be written for a competition reviewer or teammate who wants
 - Keep broad narrative in the root `README.md`; keep detailed evidence in focused docs.
 - Store documentation figures under `docs/figures/`.
 
-## 7. Git Hygiene
+## 7. Verification Script
+
+Run `python3 scripts/verify_notebook_standards.py` before committing notebook
+changes. It performs static, offline checks only — it never executes
+notebooks, since Kaggle is the execution record and audio/model inputs are
+not available locally:
+
+- Notebook JSON parses and has valid `nbformat`/`cells` structure.
+- The six top-level workflow notebooks match the retain/clear output rule in
+  Section 4 (`04_soundscape_calibrated_blend.ipynb` and
+  `05_temporal_residual_blend.ipynb` retain outputs; the rest are cleared).
+  `notebooks/support/` and `notebooks/archive/` are not covered by this rule
+  and are not checked.
+- Notebooks that write `submission.csv` warn (not fail) if they lack a static
+  234-column check or a NaN check in their source.
+
+The script exits non-zero only on JSON/output-status errors; submission-check
+gaps are warnings, since older baseline and support notebooks are not
+required to carry the full validation the final ensemble notebook has.
+
+## 8. Git Hygiene
 
 Do not commit:
 
