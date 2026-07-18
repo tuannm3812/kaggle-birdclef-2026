@@ -1,7 +1,7 @@
 # BirdCLEF+ 2026
 
 <p align="center">
-  <img src="https://www.birds.cornell.edu/home/wp-content/uploads/2018/11/aab.jpg" alt="Cornell Lab bird soundscape" width="100%">
+  <img src="docs/figures/cover_banner.png" alt="BirdCLEF+ 2026 — bioacoustic soundscape classification, public 0.950 / private 0.941" width="100%">
 </p>
 
 <p align="center">
